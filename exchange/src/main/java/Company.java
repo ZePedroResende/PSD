@@ -1,6 +1,5 @@
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Company {
     private Integer id;
@@ -39,22 +38,75 @@ public class Company {
     }
 
     public Boolean addAuction(Long maxAmount, Integer maxRate, Integer time){
-        if()
-        this.auctions.put(currentSale++, new Auction(maxAmount, maxRate, this.id, time));
+        Boolean result = false;
+        if(isAuctionAvailable()){
+            this.auctions.put(currentSale++, new Auction(maxAmount, maxRate, this.id, time));
+            currentSale++;
+            result = true;
+        }
+        return result;
     }
 
     public Boolean addEmission(Long maxAmount, Integer time){
-        this.emissions.put(currentSale, new Emission(this.id, maxAmount, time, ));
+        int rate = getRate();
+
+        if()
+        if(rate < 0) return false;
+        this.emissions.put(currentSale, new Emission(this.id, maxAmount, time, rate ));
         currentSale++;
+        return  true;
     }
 
-    public void getRate(){
-        Set<Map.Entry<Integer,Sale>> allSales = this.auctions.entrySet();
-        allSales.addAll(this.emissions.entrySet());
+    public int getRate(){
+        int rate = -1;
 
-        if(currentSale)
-        this.auctions.entrySet().stream().filter((s)-> s.getValue().ge)
+        List<Map.Entry<Integer,Sale>> listSale = getSales();
+
+        for( Map.Entry<Integer,Sale> l : listSale){
+            Sale sale = l.getValue();
+            if(sale.getClass().equals(Auction.class) ){
+                if(sale.isSucess()){
+                    return ((Auction) sale).getMinimalRate();
+                }
+            } else {
+                if(sale.isSucess()){
+                    return ((Emission) sale).getRate();
+                }else {
+                     return (int) (((Emission) sale).getRate() * 1.1);
+                }
+            }
+
+        }
+
+
+        return  rate;
     }
+
+
+    //
+    private boolean isEmissionAvailable(){
+        List<Map.Entry<Integer,Sale>> listSale = getSales();
+        if(listSale.size() == 0) return false;
+        Sale sale = listSale.get(0).getValue();
+        return (sale.getClass().equals(Auction.class) && sale.isSucess()) || (sale.)
+    }
+
+    private boolean isAuctionAvailable(){
+        List<Map.Entry<Integer,Sale>> listSale = getSales();
+        List<Auction> listAuction=  auctions.values().stream().filter(x -> x.isActive()).collect(Collectors.toList());
+        return listAuction.size() == 0;
+    }
+
+    private List<Map.Entry<Integer,Sale>> getSales(){
+        Map<Integer,Sale> sales = new HashMap<>();
+        sales.putAll(auctions);
+        sales.putAll(emissions);
+
+        List<Map.Entry<Integer,Sale>> listSale =  sales.entrySet().stream().collect(Collectors.toList());
+        Collections.reverse(listSale);
+        return listSale;
+    }
+
 
 
 }

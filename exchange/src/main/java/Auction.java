@@ -85,6 +85,25 @@ public class Auction implements Sale{
         return new AbstractMap.SimpleEntry<>(sucess, result);
     }
 
+    public int getMinimalRate(){
+        try {
+            Map.Entry<Boolean, List<List<Bid>>> results = getResults();
+
+            List<Bid> bids = results.getValue().get(0);
+
+            if(bids.size() > 0){
+                return bids.get(bids.size()-1).getRate();
+            }
+            else {
+                return -1;
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return -2;
+    }
+
     private void finishAuction(){
         this.active = false;
         notifyAll();
