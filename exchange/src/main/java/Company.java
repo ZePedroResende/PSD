@@ -16,7 +16,6 @@ public class Company {
         this.currentSale = 0;
     }
 
-
     public Integer getId() {
         return id;
     }
@@ -37,7 +36,7 @@ public class Company {
         return currentSale;
     }
 
-    public Boolean addAuction(Long maxAmount, Integer maxRate, Integer time){
+    public Boolean addAuction(Long maxAmount, Float maxRate, Integer time){
         Boolean result = false;
         if(isAuctionAvailable()){
             this.auctions.put(currentSale++, new Auction(maxAmount, maxRate, this.id, time));
@@ -48,47 +47,51 @@ public class Company {
     }
 
     public Boolean addEmission(Long maxAmount, Integer time){
-        int rate = getRate();
+        boolean result = false;
 
-        if()
-        if(rate < 0) return false;
-        this.emissions.put(currentSale, new Emission(this.id, maxAmount, time, rate ));
-        currentSale++;
-        return  true;
+        if(isEmissionAvailable()){
+            Float rate = getRate();
+            if( rate < 0) return false;
+            this.emissions.put(currentSale, new Emission(this.id, maxAmount, time, rate ));
+            currentSale++;
+            result = true;
+        }
+
+        return  result;
     }
 
-    public int getRate(){
-        int rate = -1;
+    public boolean isSaleAvailable(){
+        return  isAuctionAvailable() && isEmissionAvailable();
+    }
+
+    public Float getRate(){
+        Float rate = new Float(-1);
 
         List<Map.Entry<Integer,Sale>> listSale = getSales();
 
         for( Map.Entry<Integer,Sale> l : listSale){
             Sale sale = l.getValue();
             if(sale.getClass().equals(Auction.class) ){
-                if(sale.isSucess()){
+                if(sale.isSucess()) {
                     return ((Auction) sale).getMinimalRate();
                 }
             } else {
-                if(sale.isSucess()){
+                if(sale.isSucess()) {
                     return ((Emission) sale).getRate();
-                }else {
-                     return (int) (((Emission) sale).getRate() * 1.1);
+                } else {
+                    return new Float( ((Emission) sale).getRate() * 1.1);
                 }
             }
-
         }
-
 
         return  rate;
     }
 
-
-    //
     private boolean isEmissionAvailable(){
         List<Map.Entry<Integer,Sale>> listSale = getSales();
         if(listSale.size() == 0) return false;
         Sale sale = listSale.get(0).getValue();
-        return (sale.getClass().equals(Auction.class) && sale.isSucess()) || (sale.)
+        return  !sale.isActive() && (sale.getClass().equals(Auction.class) && sale.isSucess() ) ;
     }
 
     private boolean isAuctionAvailable(){

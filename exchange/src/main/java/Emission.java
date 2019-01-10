@@ -4,13 +4,13 @@ import java.util.*;
 
 public class Emission implements Sale{
     private Integer companyId;
-    private Integer rate;
+    private Float rate;
     private List<Buy> buys;
     private Long amount;
     private Boolean active;
     private Boolean sucess;
 
-    public Emission(Integer companyId, Long amount, Integer time, Integer rate) {
+    public Emission(Integer companyId, Long amount, Integer time, Float rate) {
         this.companyId = companyId;
         this.buys = new ArrayList<>();
         this.amount = amount;
@@ -31,7 +31,7 @@ public class Emission implements Sale{
         return amount;
     }
 
-    public Integer getRate() {
+    public Float getRate() {
         return rate;
     }
 

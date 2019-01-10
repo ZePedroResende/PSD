@@ -1,12 +1,12 @@
 public class Bid extends Buy {
-    private Integer rate;
+    private Float rate;
 
-    public Bid(Long offer, Integer rate, Integer userId) {
+    public Bid(Long offer, Float rate, Integer userId) {
        super(offer,userId);
        this.rate = rate;
     }
 
-    public Integer getRate() {
+    public Float getRate() {
         return rate;
     }
 }

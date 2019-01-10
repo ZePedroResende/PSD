@@ -5,12 +5,12 @@ import java.util.*;
 public class Auction implements Sale{
     private Map<Integer,Bid> bids;
     private Long amount;
-    private Integer maxRate;
+    private Float maxRate;
     private Boolean active;
     private Integer companyId;
     private Boolean sucess;
 
-    public Auction( Long maxAmount, Integer maxRate, Integer companyId, Integer time) {
+    public Auction( Long maxAmount, Float maxRate, Integer companyId, Integer time) {
         this.bids = new HashMap<>();
         this.amount = maxAmount;
         this.maxRate = maxRate;
@@ -27,7 +27,7 @@ public class Auction implements Sale{
         return amount;
     }
 
-    public Integer getMaxRate() {
+    public Float getMaxRate() {
         return maxRate;
     }
 
@@ -85,7 +85,7 @@ public class Auction implements Sale{
         return new AbstractMap.SimpleEntry<>(sucess, result);
     }
 
-    public int getMinimalRate(){
+    public Float getMinimalRate(){
         try {
             Map.Entry<Boolean, List<List<Bid>>> results = getResults();
 
@@ -95,13 +95,13 @@ public class Auction implements Sale{
                 return bids.get(bids.size()-1).getRate();
             }
             else {
-                return -1;
+                return new Float(-1);
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        return -2;
+        return new Float(-2);
     }
 
     private void finishAuction(){
