@@ -4,7 +4,7 @@
 server(Port) ->
   Room = spawn(fun()-> room([],#{}) end),
   Room ! {room_init, "default", Room},
-  login_manger:start(),
+  login_manager:start(),
   {ok, LSock} = gen_tcp:listen(Port, [binary, {packet, line}, {reuseaddr, true}]),
   acceptor(LSock, Room).
 
@@ -32,27 +32,30 @@ handleauth(Sock, Room) ->
       gen_tcp:close(Sock)
   end.
 
+send_msg(Sock, Result, Description) ->
+  ResBin = protocol:encode_msg(#{dest => User, type => "RESPONSE", response => #{result => Result, description => Description}}, 'Message'),
+  gen_tcp:send(Sock, ResBin).
+
 registarhandler(Sock, Room, User, Password) ->
-  case login_manger:create_account(User, Password) of
+  case login_manager:create_account(User, Password) of
     ok ->
-      ResBin = protocol:encode_msg(#{dest => User, type => "RESPONSE", response => #{result => "OK", description => "SUCCESSFUL REGISTER"}}, 'Message'),
-      gen_tcp:send(Sock, ResBin),
+      send_msg(Sock, "OK", "USER CREATED"),
       Room ! {enter, self()},
       user(User, Sock, Room);
     user_exists ->
-      ResBin = protocol:encode_msg(#{dest => User, type => "RESPONSE", response => #{result => "EXCEPTION", description => "USER EXISTS"}}, 'Message'),
-			handleauth(Sock, Room)
+      send_msg(Sock, "EXCEPTION", "USER EXISTS"),
+      handleauth(Sock, Room)
   end.
 
 loginhandler(Sock, Room, User, Password) ->
-  case login_manger:login(User, Password) of
+  case login_manager:login(User, Password) of
     ok ->
-      ResBin = protocol:encode_msg(#{dest => User, type => "RESPONSE", response => #{result => "EXCEPTION", description => "INVALID LOGIN"}}, 'Message'),
-      gen_tcp:send(Sock, ResBin),
+      send_msg(Sock, "OK", "LOGGED IN"),
       Room ! {enter, self()},
       user(User, Sock, Room);
     error ->
-      false
+      send_msg(Sock, "EXCEPTION", "INVALID LOGIN"),
+      handleauth(Sock, Room)
   end.
 
 room(Pids,Rooms) ->
@@ -89,20 +92,16 @@ user(User, Sock, Room) ->
       gen_tcp:send(Sock, Data),
       user(User, Sock, Room);
     {tcp, _, Data} ->
-      SplitData = string:split(Data, " "),
-      case string:equal("join",lists:nth(1, SplitData)) of
-        false ->
-          case string:equal("exit\r\n", Data) of
-            true ->
-              Room ! {leave, self()},
-              login_manger:logout(User),
-              gen_tcp:close(Sock);
-            false -> 
-              Room ! {line, Data},
-              user(User, Sock, Room)
-          end;
-        true ->
-          Room ! {room, lists:nth(2, SplitData), self()},
+      case string:tokens(binary_to_list(Data)," \r\n") of
+        ["exit"] ->
+          Room ! {leave, self()},
+          login_manager:logout(User),
+          gen_tcp:close(Sock);
+        ["room", Name] ->
+          Room ! {room, Name, self()},
+          user(User, Sock, Room);
+        _ ->
+          Room ! {line, Data},
           user(User, Sock, Room)
       end;
     {tcp_closed, _} ->

@@ -1,4 +1,4 @@
--module(login_manger).
+-module(login_manager).
 -export([start/0, create_account/2, close_account/2, login/2, logout/1, online/0]).
 
 %interface functions
@@ -77,6 +77,9 @@ loop(Map) ->
                     loop(maps:put(U, {P,false}, Map))
             end;
         {online, From} ->
+            Aux = fun(K,{_,BOOL},AccIn) when BOOL == true -> lists:append(K,AccIn) end,
+            Users = maps:fold(Aux,[],Map),
+            From ! {?MODULE, Users},
             loop(Map)
     end.
 
