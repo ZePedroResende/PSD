@@ -1,17 +1,17 @@
 public class Buy {
     private Long offer;
-    private Integer userId;
+    private String user;
 
-    public Buy(Long offer, Integer userId) {
+    public Buy(Long offer, String user) {
         this.offer = offer;
-        this.userId = userId;
+        this.user = user;
     }
 
     public Long getOffer() {
         return offer;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public String getUser() {
+        return user;
     }
 }

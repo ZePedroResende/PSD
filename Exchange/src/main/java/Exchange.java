@@ -5,18 +5,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Exchange {
-    private Map<Integer,Company> companies;
+    private Map<String ,Company> companies;
     private ZMQ.Socket push;
     private ZMQ.Socket pull;
     private ZMQ.Socket pub;
-    private int companyId;
 
-    public Exchange(Map<Integer,Company> companies ,ZMQ.Socket push, ZMQ.Socket pull, ZMQ.Socket pub){
+    public Exchange(Map<String,Company> companies ,ZMQ.Socket push, ZMQ.Socket pull, ZMQ.Socket pub){
         this.companies = companies;
         this.push = push;
         this.pull = pull;
         this.pub = pub;
-        this.companyId = 0;
     }
 
 
@@ -44,10 +42,10 @@ public class Exchange {
                 case "auction" :
                     switch (message.getUserType()){
                         case "investor" :
-                            result = exchange.makeBid(sale.getId(), new Bid(sale.getValue(),sale.getRate(),message.getUser().getId()));
+                            result = exchange.makeBid(sale.getName(), new Bid(sale.getValue(),sale.getRate(),message.getUser().getUsername()));
                             break;
                         case "company" :
-                            result = exchange.addAuction(sale.getId(),sale.getValue(),sale.getRate());
+                            result = exchange.addAuction(sale.getName(),sale.getValue(),sale.getRate());
                             break;
                     }
                     break;
@@ -55,16 +53,17 @@ public class Exchange {
                 case "emission" :
                     switch (message.getUserType()){
                         case "investor" :
-                            result = exchange.makeBuy(sale.getId(), new Buy(sale.getValue(),message.getUser().getId()));
+                            result = exchange.makeBuy(sale.getName(), new Buy(sale.getValue(),message.getUser().getUsername()));
                             break;
                         case "company" :
-                            result = exchange.addEmission(sale.getId(), sale.getValue());
+                            result = exchange.addEmission(sale.getName(), sale.getValue());
                             break;
                     }
                     break;
             }
             Protocol.State state = Protocol.State.newBuilder().setDescription(Boolean.toString(result)).build();
-            Protocol.Message response = Protocol.Message.newBuilder().setState(state).setPid(message.getPid()).build();
+            Protocol.User user = Protocol.User.newBuilder().setUsername(message.getUser().getUsername()).build();
+            Protocol.Message response = Protocol.Message.newBuilder().setState(state).setUser(user).build();
             push.send(response.toByteArray());
 
 
@@ -74,10 +73,10 @@ public class Exchange {
     }
 
     public static Exchange populate(ZMQ.Socket push, ZMQ.Socket pull, ZMQ.Socket pub){
-        Map<Integer,Company> companies = new HashMap<>();
-        companies.put(0,new Company(0,"Cesium"));
-        companies.put(1,new Company(1,"NECC"));
-        companies.put(2,new Company(2,"NEEGIUM"));
+        Map<String,Company> companies = new HashMap<>();
+        companies.put("Cesium",new Company("Cesium"));
+        companies.put("NECC",new Company("NECC"));
+        companies.put("NEEGIUM",new Company("NEEGIUM"));
 
         return new Exchange(companies,push,pull,pub);
 
@@ -85,23 +84,22 @@ public class Exchange {
 
 
     private void createCompany(String name){
-        int id = getCompanyId();
-        this.companies.put(id,new Company(id,name));
+        this.companies.put(name ,new Company(name));
     }
 
-    private boolean addAuction(int companyId, Long maxRate, Float rate ){
-        return this.companies.get(companyId).addAuction(maxRate, rate, 30000);
+    private boolean addAuction(String companyId, Long maxRate, Float rate ){
+        return this.companies.get(companyId).addAuction(maxRate, rate, 30000, this.push);
     }
 
-    private boolean addEmission(int companyId, Long maxRate){
-        return this.companies.get(companyId).addEmission(maxRate, 30000);
+    private boolean addEmission(String companyId, Long maxRate){
+        return this.companies.get(companyId).addEmission(maxRate, 30000, this.push);
     }
 
-    private boolean makeBid(int companyId, Bid bid ){
+    private boolean makeBid(String companyId, Bid bid ){
         return this.companies.get(companyId).makeBid(bid);
     }
 
-    private boolean makeBuy(int companyId, Buy buy){
+    private boolean makeBuy(String companyId, Buy buy){
        return this.companies.get(companyId).makeBuy(buy);
     }
 
@@ -117,8 +115,5 @@ public class Exchange {
         }
 
         return message;
-    }
-    private synchronized int getCompanyId(){
-        return this.companyId++;
     }
 }

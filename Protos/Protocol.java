@@ -17,83 +17,69 @@ public final class Protocol {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional string pid = 1;</code>
-     */
-    boolean hasPid();
-    /**
-     * <code>optional string pid = 1;</code>
-     */
-    java.lang.String getPid();
-    /**
-     * <code>optional string pid = 1;</code>
-     */
-    com.google.protobuf.ByteString
-        getPidBytes();
-
-    /**
-     * <code>optional string type = 2;</code>
+     * <code>optional string type = 1;</code>
      */
     boolean hasType();
     /**
-     * <code>optional string type = 2;</code>
+     * <code>optional string type = 1;</code>
      */
     java.lang.String getType();
     /**
-     * <code>optional string type = 2;</code>
+     * <code>optional string type = 1;</code>
      */
     com.google.protobuf.ByteString
         getTypeBytes();
 
     /**
-     * <code>optional string userType = 3;</code>
+     * <code>optional string userType = 2;</code>
      */
     boolean hasUserType();
     /**
-     * <code>optional string userType = 3;</code>
+     * <code>optional string userType = 2;</code>
      */
     java.lang.String getUserType();
     /**
-     * <code>optional string userType = 3;</code>
+     * <code>optional string userType = 2;</code>
      */
     com.google.protobuf.ByteString
         getUserTypeBytes();
 
     /**
-     * <code>optional .User user = 4;</code>
+     * <code>optional .User user = 3;</code>
      */
     boolean hasUser();
     /**
-     * <code>optional .User user = 4;</code>
+     * <code>optional .User user = 3;</code>
      */
     Protocol.User getUser();
     /**
-     * <code>optional .User user = 4;</code>
+     * <code>optional .User user = 3;</code>
      */
     Protocol.UserOrBuilder getUserOrBuilder();
 
     /**
-     * <code>optional .Sale sale = 5;</code>
+     * <code>optional .Sale sale = 4;</code>
      */
     boolean hasSale();
     /**
-     * <code>optional .Sale sale = 5;</code>
+     * <code>optional .Sale sale = 4;</code>
      */
     Protocol.Sale getSale();
     /**
-     * <code>optional .Sale sale = 5;</code>
+     * <code>optional .Sale sale = 4;</code>
      */
     Protocol.SaleOrBuilder getSaleOrBuilder();
 
     /**
-     * <code>optional .State state = 6;</code>
+     * <code>optional .State state = 5;</code>
      */
     boolean hasState();
     /**
-     * <code>optional .State state = 6;</code>
+     * <code>optional .State state = 5;</code>
      */
     Protocol.State getState();
     /**
-     * <code>optional .State state = 6;</code>
+     * <code>optional .State state = 5;</code>
      */
     Protocol.StateOrBuilder getStateOrBuilder();
   }
@@ -104,13 +90,11 @@ public final class Protocol {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:Message)
       MessageOrBuilder {
-  private static final long serialVersionUID = 0L;
     // Use Message.newBuilder() to construct.
     private Message(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
     private Message() {
-      pid_ = "";
       type_ = "";
       userType_ = "";
     }
@@ -125,9 +109,6 @@ public final class Protocol {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -139,27 +120,28 @@ public final class Protocol {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 10: {
               com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              pid_ = bs;
+              type_ = bs;
               break;
             }
             case 18: {
               com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              type_ = bs;
-              break;
-            }
-            case 26: {
-              com.google.protobuf.ByteString bs = input.readBytes();
-              bitField0_ |= 0x00000004;
               userType_ = bs;
               break;
             }
-            case 34: {
+            case 26: {
               Protocol.User.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000008) == 0x00000008)) {
+              if (((bitField0_ & 0x00000004) == 0x00000004)) {
                 subBuilder = user_.toBuilder();
               }
               user_ = input.readMessage(Protocol.User.PARSER, extensionRegistry);
@@ -167,12 +149,12 @@ public final class Protocol {
                 subBuilder.mergeFrom(user_);
                 user_ = subBuilder.buildPartial();
               }
-              bitField0_ |= 0x00000008;
+              bitField0_ |= 0x00000004;
               break;
             }
-            case 42: {
+            case 34: {
               Protocol.Sale.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000010) == 0x00000010)) {
+              if (((bitField0_ & 0x00000008) == 0x00000008)) {
                 subBuilder = sale_.toBuilder();
               }
               sale_ = input.readMessage(Protocol.Sale.PARSER, extensionRegistry);
@@ -180,12 +162,12 @@ public final class Protocol {
                 subBuilder.mergeFrom(sale_);
                 sale_ = subBuilder.buildPartial();
               }
-              bitField0_ |= 0x00000010;
+              bitField0_ |= 0x00000008;
               break;
             }
-            case 50: {
+            case 42: {
               Protocol.State.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000020) == 0x00000020)) {
+              if (((bitField0_ & 0x00000010) == 0x00000010)) {
                 subBuilder = state_.toBuilder();
               }
               state_ = input.readMessage(Protocol.State.PARSER, extensionRegistry);
@@ -193,14 +175,7 @@ public final class Protocol {
                 subBuilder.mergeFrom(state_);
                 state_ = subBuilder.buildPartial();
               }
-              bitField0_ |= 0x00000020;
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
+              bitField0_ |= 0x00000010;
               break;
             }
           }
@@ -220,7 +195,6 @@ public final class Protocol {
       return Protocol.internal_static_Message_descriptor;
     }
 
-    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return Protocol.internal_static_Message_fieldAccessorTable
@@ -229,58 +203,16 @@ public final class Protocol {
     }
 
     private int bitField0_;
-    public static final int PID_FIELD_NUMBER = 1;
-    private volatile java.lang.Object pid_;
+    public static final int TYPE_FIELD_NUMBER = 1;
+    private volatile java.lang.Object type_;
     /**
-     * <code>optional string pid = 1;</code>
+     * <code>optional string type = 1;</code>
      */
-    public boolean hasPid() {
+    public boolean hasType() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
-     * <code>optional string pid = 1;</code>
-     */
-    public java.lang.String getPid() {
-      java.lang.Object ref = pid_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        if (bs.isValidUtf8()) {
-          pid_ = s;
-        }
-        return s;
-      }
-    }
-    /**
-     * <code>optional string pid = 1;</code>
-     */
-    public com.google.protobuf.ByteString
-        getPidBytes() {
-      java.lang.Object ref = pid_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        pid_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int TYPE_FIELD_NUMBER = 2;
-    private volatile java.lang.Object type_;
-    /**
-     * <code>optional string type = 2;</code>
-     */
-    public boolean hasType() {
-      return ((bitField0_ & 0x00000002) == 0x00000002);
-    }
-    /**
-     * <code>optional string type = 2;</code>
+     * <code>optional string type = 1;</code>
      */
     public java.lang.String getType() {
       java.lang.Object ref = type_;
@@ -297,7 +229,7 @@ public final class Protocol {
       }
     }
     /**
-     * <code>optional string type = 2;</code>
+     * <code>optional string type = 1;</code>
      */
     public com.google.protobuf.ByteString
         getTypeBytes() {
@@ -313,16 +245,16 @@ public final class Protocol {
       }
     }
 
-    public static final int USERTYPE_FIELD_NUMBER = 3;
+    public static final int USERTYPE_FIELD_NUMBER = 2;
     private volatile java.lang.Object userType_;
     /**
-     * <code>optional string userType = 3;</code>
+     * <code>optional string userType = 2;</code>
      */
     public boolean hasUserType() {
-      return ((bitField0_ & 0x00000004) == 0x00000004);
+      return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
-     * <code>optional string userType = 3;</code>
+     * <code>optional string userType = 2;</code>
      */
     public java.lang.String getUserType() {
       java.lang.Object ref = userType_;
@@ -339,7 +271,7 @@ public final class Protocol {
       }
     }
     /**
-     * <code>optional string userType = 3;</code>
+     * <code>optional string userType = 2;</code>
      */
     public com.google.protobuf.ByteString
         getUserTypeBytes() {
@@ -355,71 +287,70 @@ public final class Protocol {
       }
     }
 
-    public static final int USER_FIELD_NUMBER = 4;
+    public static final int USER_FIELD_NUMBER = 3;
     private Protocol.User user_;
     /**
-     * <code>optional .User user = 4;</code>
+     * <code>optional .User user = 3;</code>
      */
     public boolean hasUser() {
-      return ((bitField0_ & 0x00000008) == 0x00000008);
+      return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
-     * <code>optional .User user = 4;</code>
+     * <code>optional .User user = 3;</code>
      */
     public Protocol.User getUser() {
       return user_ == null ? Protocol.User.getDefaultInstance() : user_;
     }
     /**
-     * <code>optional .User user = 4;</code>
+     * <code>optional .User user = 3;</code>
      */
     public Protocol.UserOrBuilder getUserOrBuilder() {
       return user_ == null ? Protocol.User.getDefaultInstance() : user_;
     }
 
-    public static final int SALE_FIELD_NUMBER = 5;
+    public static final int SALE_FIELD_NUMBER = 4;
     private Protocol.Sale sale_;
     /**
-     * <code>optional .Sale sale = 5;</code>
+     * <code>optional .Sale sale = 4;</code>
      */
     public boolean hasSale() {
-      return ((bitField0_ & 0x00000010) == 0x00000010);
+      return ((bitField0_ & 0x00000008) == 0x00000008);
     }
     /**
-     * <code>optional .Sale sale = 5;</code>
+     * <code>optional .Sale sale = 4;</code>
      */
     public Protocol.Sale getSale() {
       return sale_ == null ? Protocol.Sale.getDefaultInstance() : sale_;
     }
     /**
-     * <code>optional .Sale sale = 5;</code>
+     * <code>optional .Sale sale = 4;</code>
      */
     public Protocol.SaleOrBuilder getSaleOrBuilder() {
       return sale_ == null ? Protocol.Sale.getDefaultInstance() : sale_;
     }
 
-    public static final int STATE_FIELD_NUMBER = 6;
+    public static final int STATE_FIELD_NUMBER = 5;
     private Protocol.State state_;
     /**
-     * <code>optional .State state = 6;</code>
+     * <code>optional .State state = 5;</code>
      */
     public boolean hasState() {
-      return ((bitField0_ & 0x00000020) == 0x00000020);
+      return ((bitField0_ & 0x00000010) == 0x00000010);
     }
     /**
-     * <code>optional .State state = 6;</code>
+     * <code>optional .State state = 5;</code>
      */
     public Protocol.State getState() {
       return state_ == null ? Protocol.State.getDefaultInstance() : state_;
     }
     /**
-     * <code>optional .State state = 6;</code>
+     * <code>optional .State state = 5;</code>
      */
     public Protocol.StateOrBuilder getStateOrBuilder() {
       return state_ == null ? Protocol.State.getDefaultInstance() : state_;
     }
 
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -429,62 +360,55 @@ public final class Protocol {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, pid_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, type_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, type_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, userType_);
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, userType_);
+        output.writeMessage(3, getUser());
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
-        output.writeMessage(4, getUser());
+        output.writeMessage(4, getSale());
       }
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
-        output.writeMessage(5, getSale());
-      }
-      if (((bitField0_ & 0x00000020) == 0x00000020)) {
-        output.writeMessage(6, getState());
+        output.writeMessage(5, getState());
       }
       unknownFields.writeTo(output);
     }
 
-    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, pid_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, type_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, type_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, userType_);
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, userType_);
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(3, getUser());
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, getUser());
+          .computeMessageSize(4, getSale());
       }
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(5, getSale());
-      }
-      if (((bitField0_ & 0x00000020) == 0x00000020)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(6, getState());
+          .computeMessageSize(5, getState());
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
+    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -496,11 +420,6 @@ public final class Protocol {
       Protocol.Message other = (Protocol.Message) obj;
 
       boolean result = true;
-      result = result && (hasPid() == other.hasPid());
-      if (hasPid()) {
-        result = result && getPid()
-            .equals(other.getPid());
-      }
       result = result && (hasType() == other.hasType());
       if (hasType()) {
         result = result && getType()
@@ -536,11 +455,7 @@ public final class Protocol {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      if (hasPid()) {
-        hash = (37 * hash) + PID_FIELD_NUMBER;
-        hash = (53 * hash) + getPid().hashCode();
-      }
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasType()) {
         hash = (37 * hash) + TYPE_FIELD_NUMBER;
         hash = (53 * hash) + getType().hashCode();
@@ -566,17 +481,6 @@ public final class Protocol {
       return hash;
     }
 
-    public static Protocol.Message parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static Protocol.Message parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static Protocol.Message parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -636,7 +540,6 @@ public final class Protocol {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -644,7 +547,6 @@ public final class Protocol {
     public static Builder newBuilder(Protocol.Message prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -668,7 +570,6 @@ public final class Protocol {
         return Protocol.internal_static_Message_descriptor;
       }
 
-      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return Protocol.internal_static_Message_fieldAccessorTable
@@ -694,48 +595,42 @@ public final class Protocol {
           getStateFieldBuilder();
         }
       }
-      @java.lang.Override
       public Builder clear() {
         super.clear();
-        pid_ = "";
-        bitField0_ = (bitField0_ & ~0x00000001);
         type_ = "";
-        bitField0_ = (bitField0_ & ~0x00000002);
+        bitField0_ = (bitField0_ & ~0x00000001);
         userType_ = "";
-        bitField0_ = (bitField0_ & ~0x00000004);
+        bitField0_ = (bitField0_ & ~0x00000002);
         if (userBuilder_ == null) {
           user_ = null;
         } else {
           userBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000004);
         if (saleBuilder_ == null) {
           sale_ = null;
         } else {
           saleBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000010);
+        bitField0_ = (bitField0_ & ~0x00000008);
         if (stateBuilder_ == null) {
           state_ = null;
         } else {
           stateBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000020);
+        bitField0_ = (bitField0_ & ~0x00000010);
         return this;
       }
 
-      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return Protocol.internal_static_Message_descriptor;
       }
 
-      @java.lang.Override
       public Protocol.Message getDefaultInstanceForType() {
         return Protocol.Message.getDefaultInstance();
       }
 
-      @java.lang.Override
       public Protocol.Message build() {
         Protocol.Message result = buildPartial();
         if (!result.isInitialized()) {
@@ -744,7 +639,6 @@ public final class Protocol {
         return result;
       }
 
-      @java.lang.Override
       public Protocol.Message buildPartial() {
         Protocol.Message result = new Protocol.Message(this);
         int from_bitField0_ = bitField0_;
@@ -752,33 +646,29 @@ public final class Protocol {
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
-        result.pid_ = pid_;
+        result.type_ = type_;
         if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
-        result.type_ = type_;
+        result.userType_ = userType_;
         if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000004;
-        }
-        result.userType_ = userType_;
-        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
-          to_bitField0_ |= 0x00000008;
         }
         if (userBuilder_ == null) {
           result.user_ = user_;
         } else {
           result.user_ = userBuilder_.build();
         }
-        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
-          to_bitField0_ |= 0x00000010;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
         }
         if (saleBuilder_ == null) {
           result.sale_ = sale_;
         } else {
           result.sale_ = saleBuilder_.build();
         }
-        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
-          to_bitField0_ |= 0x00000020;
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+          to_bitField0_ |= 0x00000010;
         }
         if (stateBuilder_ == null) {
           result.state_ = state_;
@@ -790,39 +680,32 @@ public final class Protocol {
         return result;
       }
 
-      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
-      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+          Object value) {
         return (Builder) super.setField(field, value);
       }
-      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
+          int index, Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+          Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof Protocol.Message) {
           return mergeFrom((Protocol.Message)other);
@@ -834,18 +717,13 @@ public final class Protocol {
 
       public Builder mergeFrom(Protocol.Message other) {
         if (other == Protocol.Message.getDefaultInstance()) return this;
-        if (other.hasPid()) {
-          bitField0_ |= 0x00000001;
-          pid_ = other.pid_;
-          onChanged();
-        }
         if (other.hasType()) {
-          bitField0_ |= 0x00000002;
+          bitField0_ |= 0x00000001;
           type_ = other.type_;
           onChanged();
         }
         if (other.hasUserType()) {
-          bitField0_ |= 0x00000004;
+          bitField0_ |= 0x00000002;
           userType_ = other.userType_;
           onChanged();
         }
@@ -863,12 +741,10 @@ public final class Protocol {
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -888,91 +764,15 @@ public final class Protocol {
       }
       private int bitField0_;
 
-      private java.lang.Object pid_ = "";
+      private java.lang.Object type_ = "";
       /**
-       * <code>optional string pid = 1;</code>
+       * <code>optional string type = 1;</code>
        */
-      public boolean hasPid() {
+      public boolean hasType() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
-       * <code>optional string pid = 1;</code>
-       */
-      public java.lang.String getPid() {
-        java.lang.Object ref = pid_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            pid_ = s;
-          }
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>optional string pid = 1;</code>
-       */
-      public com.google.protobuf.ByteString
-          getPidBytes() {
-        java.lang.Object ref = pid_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          pid_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>optional string pid = 1;</code>
-       */
-      public Builder setPid(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000001;
-        pid_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional string pid = 1;</code>
-       */
-      public Builder clearPid() {
-        bitField0_ = (bitField0_ & ~0x00000001);
-        pid_ = getDefaultInstance().getPid();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional string pid = 1;</code>
-       */
-      public Builder setPidBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000001;
-        pid_ = value;
-        onChanged();
-        return this;
-      }
-
-      private java.lang.Object type_ = "";
-      /**
-       * <code>optional string type = 2;</code>
-       */
-      public boolean hasType() {
-        return ((bitField0_ & 0x00000002) == 0x00000002);
-      }
-      /**
-       * <code>optional string type = 2;</code>
+       * <code>optional string type = 1;</code>
        */
       public java.lang.String getType() {
         java.lang.Object ref = type_;
@@ -989,7 +789,7 @@ public final class Protocol {
         }
       }
       /**
-       * <code>optional string type = 2;</code>
+       * <code>optional string type = 1;</code>
        */
       public com.google.protobuf.ByteString
           getTypeBytes() {
@@ -1005,36 +805,36 @@ public final class Protocol {
         }
       }
       /**
-       * <code>optional string type = 2;</code>
+       * <code>optional string type = 1;</code>
        */
       public Builder setType(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000002;
+  bitField0_ |= 0x00000001;
         type_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional string type = 2;</code>
+       * <code>optional string type = 1;</code>
        */
       public Builder clearType() {
-        bitField0_ = (bitField0_ & ~0x00000002);
+        bitField0_ = (bitField0_ & ~0x00000001);
         type_ = getDefaultInstance().getType();
         onChanged();
         return this;
       }
       /**
-       * <code>optional string type = 2;</code>
+       * <code>optional string type = 1;</code>
        */
       public Builder setTypeBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000002;
+  bitField0_ |= 0x00000001;
         type_ = value;
         onChanged();
         return this;
@@ -1042,13 +842,13 @@ public final class Protocol {
 
       private java.lang.Object userType_ = "";
       /**
-       * <code>optional string userType = 3;</code>
+       * <code>optional string userType = 2;</code>
        */
       public boolean hasUserType() {
-        return ((bitField0_ & 0x00000004) == 0x00000004);
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
-       * <code>optional string userType = 3;</code>
+       * <code>optional string userType = 2;</code>
        */
       public java.lang.String getUserType() {
         java.lang.Object ref = userType_;
@@ -1065,7 +865,7 @@ public final class Protocol {
         }
       }
       /**
-       * <code>optional string userType = 3;</code>
+       * <code>optional string userType = 2;</code>
        */
       public com.google.protobuf.ByteString
           getUserTypeBytes() {
@@ -1081,36 +881,36 @@ public final class Protocol {
         }
       }
       /**
-       * <code>optional string userType = 3;</code>
+       * <code>optional string userType = 2;</code>
        */
       public Builder setUserType(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000004;
+  bitField0_ |= 0x00000002;
         userType_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional string userType = 3;</code>
+       * <code>optional string userType = 2;</code>
        */
       public Builder clearUserType() {
-        bitField0_ = (bitField0_ & ~0x00000004);
+        bitField0_ = (bitField0_ & ~0x00000002);
         userType_ = getDefaultInstance().getUserType();
         onChanged();
         return this;
       }
       /**
-       * <code>optional string userType = 3;</code>
+       * <code>optional string userType = 2;</code>
        */
       public Builder setUserTypeBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000004;
+  bitField0_ |= 0x00000002;
         userType_ = value;
         onChanged();
         return this;
@@ -1120,13 +920,13 @@ public final class Protocol {
       private com.google.protobuf.SingleFieldBuilderV3<
           Protocol.User, Protocol.User.Builder, Protocol.UserOrBuilder> userBuilder_;
       /**
-       * <code>optional .User user = 4;</code>
+       * <code>optional .User user = 3;</code>
        */
       public boolean hasUser() {
-        return ((bitField0_ & 0x00000008) == 0x00000008);
+        return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
-       * <code>optional .User user = 4;</code>
+       * <code>optional .User user = 3;</code>
        */
       public Protocol.User getUser() {
         if (userBuilder_ == null) {
@@ -1136,7 +936,7 @@ public final class Protocol {
         }
       }
       /**
-       * <code>optional .User user = 4;</code>
+       * <code>optional .User user = 3;</code>
        */
       public Builder setUser(Protocol.User value) {
         if (userBuilder_ == null) {
@@ -1148,11 +948,11 @@ public final class Protocol {
         } else {
           userBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000004;
         return this;
       }
       /**
-       * <code>optional .User user = 4;</code>
+       * <code>optional .User user = 3;</code>
        */
       public Builder setUser(
           Protocol.User.Builder builderForValue) {
@@ -1162,15 +962,15 @@ public final class Protocol {
         } else {
           userBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000004;
         return this;
       }
       /**
-       * <code>optional .User user = 4;</code>
+       * <code>optional .User user = 3;</code>
        */
       public Builder mergeUser(Protocol.User value) {
         if (userBuilder_ == null) {
-          if (((bitField0_ & 0x00000008) == 0x00000008) &&
+          if (((bitField0_ & 0x00000004) == 0x00000004) &&
               user_ != null &&
               user_ != Protocol.User.getDefaultInstance()) {
             user_ =
@@ -1182,11 +982,11 @@ public final class Protocol {
         } else {
           userBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000004;
         return this;
       }
       /**
-       * <code>optional .User user = 4;</code>
+       * <code>optional .User user = 3;</code>
        */
       public Builder clearUser() {
         if (userBuilder_ == null) {
@@ -1195,19 +995,19 @@ public final class Protocol {
         } else {
           userBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000004);
         return this;
       }
       /**
-       * <code>optional .User user = 4;</code>
+       * <code>optional .User user = 3;</code>
        */
       public Protocol.User.Builder getUserBuilder() {
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000004;
         onChanged();
         return getUserFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .User user = 4;</code>
+       * <code>optional .User user = 3;</code>
        */
       public Protocol.UserOrBuilder getUserOrBuilder() {
         if (userBuilder_ != null) {
@@ -1218,7 +1018,7 @@ public final class Protocol {
         }
       }
       /**
-       * <code>optional .User user = 4;</code>
+       * <code>optional .User user = 3;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           Protocol.User, Protocol.User.Builder, Protocol.UserOrBuilder> 
@@ -1238,13 +1038,13 @@ public final class Protocol {
       private com.google.protobuf.SingleFieldBuilderV3<
           Protocol.Sale, Protocol.Sale.Builder, Protocol.SaleOrBuilder> saleBuilder_;
       /**
-       * <code>optional .Sale sale = 5;</code>
+       * <code>optional .Sale sale = 4;</code>
        */
       public boolean hasSale() {
-        return ((bitField0_ & 0x00000010) == 0x00000010);
+        return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       /**
-       * <code>optional .Sale sale = 5;</code>
+       * <code>optional .Sale sale = 4;</code>
        */
       public Protocol.Sale getSale() {
         if (saleBuilder_ == null) {
@@ -1254,7 +1054,7 @@ public final class Protocol {
         }
       }
       /**
-       * <code>optional .Sale sale = 5;</code>
+       * <code>optional .Sale sale = 4;</code>
        */
       public Builder setSale(Protocol.Sale value) {
         if (saleBuilder_ == null) {
@@ -1266,11 +1066,11 @@ public final class Protocol {
         } else {
           saleBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00000010;
+        bitField0_ |= 0x00000008;
         return this;
       }
       /**
-       * <code>optional .Sale sale = 5;</code>
+       * <code>optional .Sale sale = 4;</code>
        */
       public Builder setSale(
           Protocol.Sale.Builder builderForValue) {
@@ -1280,15 +1080,15 @@ public final class Protocol {
         } else {
           saleBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00000010;
+        bitField0_ |= 0x00000008;
         return this;
       }
       /**
-       * <code>optional .Sale sale = 5;</code>
+       * <code>optional .Sale sale = 4;</code>
        */
       public Builder mergeSale(Protocol.Sale value) {
         if (saleBuilder_ == null) {
-          if (((bitField0_ & 0x00000010) == 0x00000010) &&
+          if (((bitField0_ & 0x00000008) == 0x00000008) &&
               sale_ != null &&
               sale_ != Protocol.Sale.getDefaultInstance()) {
             sale_ =
@@ -1300,11 +1100,11 @@ public final class Protocol {
         } else {
           saleBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000010;
+        bitField0_ |= 0x00000008;
         return this;
       }
       /**
-       * <code>optional .Sale sale = 5;</code>
+       * <code>optional .Sale sale = 4;</code>
        */
       public Builder clearSale() {
         if (saleBuilder_ == null) {
@@ -1313,19 +1113,19 @@ public final class Protocol {
         } else {
           saleBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000010);
+        bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
       /**
-       * <code>optional .Sale sale = 5;</code>
+       * <code>optional .Sale sale = 4;</code>
        */
       public Protocol.Sale.Builder getSaleBuilder() {
-        bitField0_ |= 0x00000010;
+        bitField0_ |= 0x00000008;
         onChanged();
         return getSaleFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .Sale sale = 5;</code>
+       * <code>optional .Sale sale = 4;</code>
        */
       public Protocol.SaleOrBuilder getSaleOrBuilder() {
         if (saleBuilder_ != null) {
@@ -1336,7 +1136,7 @@ public final class Protocol {
         }
       }
       /**
-       * <code>optional .Sale sale = 5;</code>
+       * <code>optional .Sale sale = 4;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           Protocol.Sale, Protocol.Sale.Builder, Protocol.SaleOrBuilder> 
@@ -1356,13 +1156,13 @@ public final class Protocol {
       private com.google.protobuf.SingleFieldBuilderV3<
           Protocol.State, Protocol.State.Builder, Protocol.StateOrBuilder> stateBuilder_;
       /**
-       * <code>optional .State state = 6;</code>
+       * <code>optional .State state = 5;</code>
        */
       public boolean hasState() {
-        return ((bitField0_ & 0x00000020) == 0x00000020);
+        return ((bitField0_ & 0x00000010) == 0x00000010);
       }
       /**
-       * <code>optional .State state = 6;</code>
+       * <code>optional .State state = 5;</code>
        */
       public Protocol.State getState() {
         if (stateBuilder_ == null) {
@@ -1372,7 +1172,7 @@ public final class Protocol {
         }
       }
       /**
-       * <code>optional .State state = 6;</code>
+       * <code>optional .State state = 5;</code>
        */
       public Builder setState(Protocol.State value) {
         if (stateBuilder_ == null) {
@@ -1384,11 +1184,11 @@ public final class Protocol {
         } else {
           stateBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00000020;
+        bitField0_ |= 0x00000010;
         return this;
       }
       /**
-       * <code>optional .State state = 6;</code>
+       * <code>optional .State state = 5;</code>
        */
       public Builder setState(
           Protocol.State.Builder builderForValue) {
@@ -1398,15 +1198,15 @@ public final class Protocol {
         } else {
           stateBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00000020;
+        bitField0_ |= 0x00000010;
         return this;
       }
       /**
-       * <code>optional .State state = 6;</code>
+       * <code>optional .State state = 5;</code>
        */
       public Builder mergeState(Protocol.State value) {
         if (stateBuilder_ == null) {
-          if (((bitField0_ & 0x00000020) == 0x00000020) &&
+          if (((bitField0_ & 0x00000010) == 0x00000010) &&
               state_ != null &&
               state_ != Protocol.State.getDefaultInstance()) {
             state_ =
@@ -1418,11 +1218,11 @@ public final class Protocol {
         } else {
           stateBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000020;
+        bitField0_ |= 0x00000010;
         return this;
       }
       /**
-       * <code>optional .State state = 6;</code>
+       * <code>optional .State state = 5;</code>
        */
       public Builder clearState() {
         if (stateBuilder_ == null) {
@@ -1431,19 +1231,19 @@ public final class Protocol {
         } else {
           stateBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000020);
+        bitField0_ = (bitField0_ & ~0x00000010);
         return this;
       }
       /**
-       * <code>optional .State state = 6;</code>
+       * <code>optional .State state = 5;</code>
        */
       public Protocol.State.Builder getStateBuilder() {
-        bitField0_ |= 0x00000020;
+        bitField0_ |= 0x00000010;
         onChanged();
         return getStateFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .State state = 6;</code>
+       * <code>optional .State state = 5;</code>
        */
       public Protocol.StateOrBuilder getStateOrBuilder() {
         if (stateBuilder_ != null) {
@@ -1454,7 +1254,7 @@ public final class Protocol {
         }
       }
       /**
-       * <code>optional .State state = 6;</code>
+       * <code>optional .State state = 5;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           Protocol.State, Protocol.State.Builder, Protocol.StateOrBuilder> 
@@ -1469,13 +1269,11 @@ public final class Protocol {
         }
         return stateBuilder_;
       }
-      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
-      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -1497,12 +1295,11 @@ public final class Protocol {
 
     @java.lang.Deprecated public static final com.google.protobuf.Parser<Message>
         PARSER = new com.google.protobuf.AbstractParser<Message>() {
-      @java.lang.Override
       public Message parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new Message(input, extensionRegistry);
+          return new Message(input, extensionRegistry);
       }
     };
 
@@ -1515,7 +1312,6 @@ public final class Protocol {
       return PARSER;
     }
 
-    @java.lang.Override
     public Protocol.Message getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -1527,21 +1323,18 @@ public final class Protocol {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <pre>
-     * Company ID
-     * </pre>
-     *
-     * <code>optional int32 id = 1;</code>
+     * <code>optional string name = 1;</code>
      */
-    boolean hasId();
+    boolean hasName();
     /**
-     * <pre>
-     * Company ID
-     * </pre>
-     *
-     * <code>optional int32 id = 1;</code>
+     * <code>optional string name = 1;</code>
      */
-    int getId();
+    java.lang.String getName();
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getNameBytes();
 
     /**
      * <code>optional int64 value = 2;</code>
@@ -1568,13 +1361,12 @@ public final class Protocol {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:Sale)
       SaleOrBuilder {
-  private static final long serialVersionUID = 0L;
     // Use Sale.newBuilder() to construct.
     private Sale(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
     private Sale() {
-      id_ = 0;
+      name_ = "";
       value_ = 0L;
       rate_ = 0F;
     }
@@ -1589,9 +1381,6 @@ public final class Protocol {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -1603,9 +1392,17 @@ public final class Protocol {
             case 0:
               done = true;
               break;
-            case 8: {
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              id_ = input.readInt32();
+              name_ = bs;
               break;
             }
             case 16: {
@@ -1616,13 +1413,6 @@ public final class Protocol {
             case 29: {
               bitField0_ |= 0x00000004;
               rate_ = input.readFloat();
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
               break;
             }
           }
@@ -1642,7 +1432,6 @@ public final class Protocol {
       return Protocol.internal_static_Sale_descriptor;
     }
 
-    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return Protocol.internal_static_Sale_fieldAccessorTable
@@ -1651,27 +1440,46 @@ public final class Protocol {
     }
 
     private int bitField0_;
-    public static final int ID_FIELD_NUMBER = 1;
-    private int id_;
+    public static final int NAME_FIELD_NUMBER = 1;
+    private volatile java.lang.Object name_;
     /**
-     * <pre>
-     * Company ID
-     * </pre>
-     *
-     * <code>optional int32 id = 1;</code>
+     * <code>optional string name = 1;</code>
      */
-    public boolean hasId() {
+    public boolean hasName() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
-     * <pre>
-     * Company ID
-     * </pre>
-     *
-     * <code>optional int32 id = 1;</code>
+     * <code>optional string name = 1;</code>
      */
-    public int getId() {
-      return id_;
+    public java.lang.String getName() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          name_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getNameBytes() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        name_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
     }
 
     public static final int VALUE_FIELD_NUMBER = 2;
@@ -1705,7 +1513,6 @@ public final class Protocol {
     }
 
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -1715,11 +1522,10 @@ public final class Protocol {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeInt32(1, id_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, name_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         output.writeInt64(2, value_);
@@ -1730,15 +1536,13 @@ public final class Protocol {
       unknownFields.writeTo(output);
     }
 
-    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, id_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, name_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
@@ -1753,6 +1557,7 @@ public final class Protocol {
       return size;
     }
 
+    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -1764,10 +1569,10 @@ public final class Protocol {
       Protocol.Sale other = (Protocol.Sale) obj;
 
       boolean result = true;
-      result = result && (hasId() == other.hasId());
-      if (hasId()) {
-        result = result && (getId()
-            == other.getId());
+      result = result && (hasName() == other.hasName());
+      if (hasName()) {
+        result = result && getName()
+            .equals(other.getName());
       }
       result = result && (hasValue() == other.hasValue());
       if (hasValue()) {
@@ -1791,10 +1596,10 @@ public final class Protocol {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      if (hasId()) {
-        hash = (37 * hash) + ID_FIELD_NUMBER;
-        hash = (53 * hash) + getId();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
+      if (hasName()) {
+        hash = (37 * hash) + NAME_FIELD_NUMBER;
+        hash = (53 * hash) + getName().hashCode();
       }
       if (hasValue()) {
         hash = (37 * hash) + VALUE_FIELD_NUMBER;
@@ -1811,17 +1616,6 @@ public final class Protocol {
       return hash;
     }
 
-    public static Protocol.Sale parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static Protocol.Sale parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static Protocol.Sale parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -1881,7 +1675,6 @@ public final class Protocol {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -1889,7 +1682,6 @@ public final class Protocol {
     public static Builder newBuilder(Protocol.Sale prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -1913,7 +1705,6 @@ public final class Protocol {
         return Protocol.internal_static_Sale_descriptor;
       }
 
-      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return Protocol.internal_static_Sale_fieldAccessorTable
@@ -1936,10 +1727,9 @@ public final class Protocol {
                 .alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
       public Builder clear() {
         super.clear();
-        id_ = 0;
+        name_ = "";
         bitField0_ = (bitField0_ & ~0x00000001);
         value_ = 0L;
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -1948,18 +1738,15 @@ public final class Protocol {
         return this;
       }
 
-      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return Protocol.internal_static_Sale_descriptor;
       }
 
-      @java.lang.Override
       public Protocol.Sale getDefaultInstanceForType() {
         return Protocol.Sale.getDefaultInstance();
       }
 
-      @java.lang.Override
       public Protocol.Sale build() {
         Protocol.Sale result = buildPartial();
         if (!result.isInitialized()) {
@@ -1968,7 +1755,6 @@ public final class Protocol {
         return result;
       }
 
-      @java.lang.Override
       public Protocol.Sale buildPartial() {
         Protocol.Sale result = new Protocol.Sale(this);
         int from_bitField0_ = bitField0_;
@@ -1976,7 +1762,7 @@ public final class Protocol {
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
-        result.id_ = id_;
+        result.name_ = name_;
         if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
@@ -1990,39 +1776,32 @@ public final class Protocol {
         return result;
       }
 
-      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
-      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+          Object value) {
         return (Builder) super.setField(field, value);
       }
-      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
+          int index, Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+          Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof Protocol.Sale) {
           return mergeFrom((Protocol.Sale)other);
@@ -2034,8 +1813,10 @@ public final class Protocol {
 
       public Builder mergeFrom(Protocol.Sale other) {
         if (other == Protocol.Sale.getDefaultInstance()) return this;
-        if (other.hasId()) {
-          setId(other.getId());
+        if (other.hasName()) {
+          bitField0_ |= 0x00000001;
+          name_ = other.name_;
+          onChanged();
         }
         if (other.hasValue()) {
           setValue(other.getValue());
@@ -2048,12 +1829,10 @@ public final class Protocol {
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -2073,50 +1852,78 @@ public final class Protocol {
       }
       private int bitField0_;
 
-      private int id_ ;
+      private java.lang.Object name_ = "";
       /**
-       * <pre>
-       * Company ID
-       * </pre>
-       *
-       * <code>optional int32 id = 1;</code>
+       * <code>optional string name = 1;</code>
        */
-      public boolean hasId() {
+      public boolean hasName() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
-       * <pre>
-       * Company ID
-       * </pre>
-       *
-       * <code>optional int32 id = 1;</code>
+       * <code>optional string name = 1;</code>
        */
-      public int getId() {
-        return id_;
+      public java.lang.String getName() {
+        java.lang.Object ref = name_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            name_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
       }
       /**
-       * <pre>
-       * Company ID
-       * </pre>
-       *
-       * <code>optional int32 id = 1;</code>
+       * <code>optional string name = 1;</code>
        */
-      public Builder setId(int value) {
-        bitField0_ |= 0x00000001;
-        id_ = value;
+      public com.google.protobuf.ByteString
+          getNameBytes() {
+        java.lang.Object ref = name_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          name_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public Builder setName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        name_ = value;
         onChanged();
         return this;
       }
       /**
-       * <pre>
-       * Company ID
-       * </pre>
-       *
-       * <code>optional int32 id = 1;</code>
+       * <code>optional string name = 1;</code>
        */
-      public Builder clearId() {
+      public Builder clearName() {
         bitField0_ = (bitField0_ & ~0x00000001);
-        id_ = 0;
+        name_ = getDefaultInstance().getName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public Builder setNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        name_ = value;
         onChanged();
         return this;
       }
@@ -2184,13 +1991,11 @@ public final class Protocol {
         onChanged();
         return this;
       }
-      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
-      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -2212,12 +2017,11 @@ public final class Protocol {
 
     @java.lang.Deprecated public static final com.google.protobuf.Parser<Sale>
         PARSER = new com.google.protobuf.AbstractParser<Sale>() {
-      @java.lang.Override
       public Sale parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new Sale(input, extensionRegistry);
+          return new Sale(input, extensionRegistry);
       }
     };
 
@@ -2230,7 +2034,6 @@ public final class Protocol {
       return PARSER;
     }
 
-    @java.lang.Override
     public Protocol.Sale getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -2276,7 +2079,6 @@ public final class Protocol {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:State)
       StateOrBuilder {
-  private static final long serialVersionUID = 0L;
     // Use State.newBuilder() to construct.
     private State(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -2296,9 +2098,6 @@ public final class Protocol {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -2310,6 +2109,13 @@ public final class Protocol {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 10: {
               com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
@@ -2320,13 +2126,6 @@ public final class Protocol {
               com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
               description_ = bs;
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
               break;
             }
           }
@@ -2346,7 +2145,6 @@ public final class Protocol {
       return Protocol.internal_static_State_descriptor;
     }
 
-    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return Protocol.internal_static_State_fieldAccessorTable
@@ -2440,7 +2238,6 @@ public final class Protocol {
     }
 
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -2450,7 +2247,6 @@ public final class Protocol {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -2462,7 +2258,6 @@ public final class Protocol {
       unknownFields.writeTo(output);
     }
 
-    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -2479,6 +2274,7 @@ public final class Protocol {
       return size;
     }
 
+    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -2510,7 +2306,7 @@ public final class Protocol {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasResult()) {
         hash = (37 * hash) + RESULT_FIELD_NUMBER;
         hash = (53 * hash) + getResult().hashCode();
@@ -2524,17 +2320,6 @@ public final class Protocol {
       return hash;
     }
 
-    public static Protocol.State parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static Protocol.State parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static Protocol.State parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -2594,7 +2379,6 @@ public final class Protocol {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -2602,7 +2386,6 @@ public final class Protocol {
     public static Builder newBuilder(Protocol.State prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -2626,7 +2409,6 @@ public final class Protocol {
         return Protocol.internal_static_State_descriptor;
       }
 
-      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return Protocol.internal_static_State_fieldAccessorTable
@@ -2649,7 +2431,6 @@ public final class Protocol {
                 .alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
       public Builder clear() {
         super.clear();
         result_ = "";
@@ -2659,18 +2440,15 @@ public final class Protocol {
         return this;
       }
 
-      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return Protocol.internal_static_State_descriptor;
       }
 
-      @java.lang.Override
       public Protocol.State getDefaultInstanceForType() {
         return Protocol.State.getDefaultInstance();
       }
 
-      @java.lang.Override
       public Protocol.State build() {
         Protocol.State result = buildPartial();
         if (!result.isInitialized()) {
@@ -2679,7 +2457,6 @@ public final class Protocol {
         return result;
       }
 
-      @java.lang.Override
       public Protocol.State buildPartial() {
         Protocol.State result = new Protocol.State(this);
         int from_bitField0_ = bitField0_;
@@ -2697,39 +2474,32 @@ public final class Protocol {
         return result;
       }
 
-      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
-      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+          Object value) {
         return (Builder) super.setField(field, value);
       }
-      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
+          int index, Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+          Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof Protocol.State) {
           return mergeFrom((Protocol.State)other);
@@ -2756,12 +2526,10 @@ public final class Protocol {
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -2932,13 +2700,11 @@ public final class Protocol {
         onChanged();
         return this;
       }
-      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
-      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -2960,12 +2726,11 @@ public final class Protocol {
 
     @java.lang.Deprecated public static final com.google.protobuf.Parser<State>
         PARSER = new com.google.protobuf.AbstractParser<State>() {
-      @java.lang.Override
       public State parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new State(input, extensionRegistry);
+          return new State(input, extensionRegistry);
       }
     };
 
@@ -2978,7 +2743,6 @@ public final class Protocol {
       return PARSER;
     }
 
-    @java.lang.Override
     public Protocol.State getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -2990,38 +2754,29 @@ public final class Protocol {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional int32 id = 1;</code>
-     */
-    boolean hasId();
-    /**
-     * <code>optional int32 id = 1;</code>
-     */
-    int getId();
-
-    /**
-     * <code>optional string username = 2;</code>
+     * <code>optional string username = 1;</code>
      */
     boolean hasUsername();
     /**
-     * <code>optional string username = 2;</code>
+     * <code>optional string username = 1;</code>
      */
     java.lang.String getUsername();
     /**
-     * <code>optional string username = 2;</code>
+     * <code>optional string username = 1;</code>
      */
     com.google.protobuf.ByteString
         getUsernameBytes();
 
     /**
-     * <code>optional string password = 3;</code>
+     * <code>optional string password = 2;</code>
      */
     boolean hasPassword();
     /**
-     * <code>optional string password = 3;</code>
+     * <code>optional string password = 2;</code>
      */
     java.lang.String getPassword();
     /**
-     * <code>optional string password = 3;</code>
+     * <code>optional string password = 2;</code>
      */
     com.google.protobuf.ByteString
         getPasswordBytes();
@@ -3033,13 +2788,11 @@ public final class Protocol {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:User)
       UserOrBuilder {
-  private static final long serialVersionUID = 0L;
     // Use User.newBuilder() to construct.
     private User(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
     private User() {
-      id_ = 0;
       username_ = "";
       password_ = "";
     }
@@ -3054,9 +2807,6 @@ public final class Protocol {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -3068,28 +2818,23 @@ public final class Protocol {
             case 0:
               done = true;
               break;
-            case 8: {
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              id_ = input.readInt32();
+              username_ = bs;
               break;
             }
             case 18: {
               com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              username_ = bs;
-              break;
-            }
-            case 26: {
-              com.google.protobuf.ByteString bs = input.readBytes();
-              bitField0_ |= 0x00000004;
               password_ = bs;
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
               break;
             }
           }
@@ -3109,7 +2854,6 @@ public final class Protocol {
       return Protocol.internal_static_User_descriptor;
     }
 
-    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return Protocol.internal_static_User_fieldAccessorTable
@@ -3118,31 +2862,16 @@ public final class Protocol {
     }
 
     private int bitField0_;
-    public static final int ID_FIELD_NUMBER = 1;
-    private int id_;
+    public static final int USERNAME_FIELD_NUMBER = 1;
+    private volatile java.lang.Object username_;
     /**
-     * <code>optional int32 id = 1;</code>
+     * <code>optional string username = 1;</code>
      */
-    public boolean hasId() {
+    public boolean hasUsername() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
-     * <code>optional int32 id = 1;</code>
-     */
-    public int getId() {
-      return id_;
-    }
-
-    public static final int USERNAME_FIELD_NUMBER = 2;
-    private volatile java.lang.Object username_;
-    /**
-     * <code>optional string username = 2;</code>
-     */
-    public boolean hasUsername() {
-      return ((bitField0_ & 0x00000002) == 0x00000002);
-    }
-    /**
-     * <code>optional string username = 2;</code>
+     * <code>optional string username = 1;</code>
      */
     public java.lang.String getUsername() {
       java.lang.Object ref = username_;
@@ -3159,7 +2888,7 @@ public final class Protocol {
       }
     }
     /**
-     * <code>optional string username = 2;</code>
+     * <code>optional string username = 1;</code>
      */
     public com.google.protobuf.ByteString
         getUsernameBytes() {
@@ -3175,16 +2904,16 @@ public final class Protocol {
       }
     }
 
-    public static final int PASSWORD_FIELD_NUMBER = 3;
+    public static final int PASSWORD_FIELD_NUMBER = 2;
     private volatile java.lang.Object password_;
     /**
-     * <code>optional string password = 3;</code>
+     * <code>optional string password = 2;</code>
      */
     public boolean hasPassword() {
-      return ((bitField0_ & 0x00000004) == 0x00000004);
+      return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
-     * <code>optional string password = 3;</code>
+     * <code>optional string password = 2;</code>
      */
     public java.lang.String getPassword() {
       java.lang.Object ref = password_;
@@ -3201,7 +2930,7 @@ public final class Protocol {
       }
     }
     /**
-     * <code>optional string password = 3;</code>
+     * <code>optional string password = 2;</code>
      */
     public com.google.protobuf.ByteString
         getPasswordBytes() {
@@ -3218,7 +2947,6 @@ public final class Protocol {
     }
 
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -3228,42 +2956,34 @@ public final class Protocol {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeInt32(1, id_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, username_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, username_);
-      }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, password_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, password_);
       }
       unknownFields.writeTo(output);
     }
 
-    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, id_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, username_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, username_);
-      }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, password_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, password_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
+    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -3275,11 +2995,6 @@ public final class Protocol {
       Protocol.User other = (Protocol.User) obj;
 
       boolean result = true;
-      result = result && (hasId() == other.hasId());
-      if (hasId()) {
-        result = result && (getId()
-            == other.getId());
-      }
       result = result && (hasUsername() == other.hasUsername());
       if (hasUsername()) {
         result = result && getUsername()
@@ -3300,11 +3015,7 @@ public final class Protocol {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      if (hasId()) {
-        hash = (37 * hash) + ID_FIELD_NUMBER;
-        hash = (53 * hash) + getId();
-      }
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasUsername()) {
         hash = (37 * hash) + USERNAME_FIELD_NUMBER;
         hash = (53 * hash) + getUsername().hashCode();
@@ -3318,17 +3029,6 @@ public final class Protocol {
       return hash;
     }
 
-    public static Protocol.User parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static Protocol.User parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static Protocol.User parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -3388,7 +3088,6 @@ public final class Protocol {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -3396,7 +3095,6 @@ public final class Protocol {
     public static Builder newBuilder(Protocol.User prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -3420,7 +3118,6 @@ public final class Protocol {
         return Protocol.internal_static_User_descriptor;
       }
 
-      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return Protocol.internal_static_User_fieldAccessorTable
@@ -3443,30 +3140,24 @@ public final class Protocol {
                 .alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
       public Builder clear() {
         super.clear();
-        id_ = 0;
-        bitField0_ = (bitField0_ & ~0x00000001);
         username_ = "";
-        bitField0_ = (bitField0_ & ~0x00000002);
+        bitField0_ = (bitField0_ & ~0x00000001);
         password_ = "";
-        bitField0_ = (bitField0_ & ~0x00000004);
+        bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
 
-      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return Protocol.internal_static_User_descriptor;
       }
 
-      @java.lang.Override
       public Protocol.User getDefaultInstanceForType() {
         return Protocol.User.getDefaultInstance();
       }
 
-      @java.lang.Override
       public Protocol.User build() {
         Protocol.User result = buildPartial();
         if (!result.isInitialized()) {
@@ -3475,7 +3166,6 @@ public final class Protocol {
         return result;
       }
 
-      @java.lang.Override
       public Protocol.User buildPartial() {
         Protocol.User result = new Protocol.User(this);
         int from_bitField0_ = bitField0_;
@@ -3483,13 +3173,9 @@ public final class Protocol {
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
-        result.id_ = id_;
+        result.username_ = username_;
         if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
-        }
-        result.username_ = username_;
-        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
-          to_bitField0_ |= 0x00000004;
         }
         result.password_ = password_;
         result.bitField0_ = to_bitField0_;
@@ -3497,39 +3183,32 @@ public final class Protocol {
         return result;
       }
 
-      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
-      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+          Object value) {
         return (Builder) super.setField(field, value);
       }
-      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
+          int index, Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+          Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof Protocol.User) {
           return mergeFrom((Protocol.User)other);
@@ -3541,16 +3220,13 @@ public final class Protocol {
 
       public Builder mergeFrom(Protocol.User other) {
         if (other == Protocol.User.getDefaultInstance()) return this;
-        if (other.hasId()) {
-          setId(other.getId());
-        }
         if (other.hasUsername()) {
-          bitField0_ |= 0x00000002;
+          bitField0_ |= 0x00000001;
           username_ = other.username_;
           onChanged();
         }
         if (other.hasPassword()) {
-          bitField0_ |= 0x00000004;
+          bitField0_ |= 0x00000002;
           password_ = other.password_;
           onChanged();
         }
@@ -3559,12 +3235,10 @@ public final class Protocol {
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -3584,47 +3258,15 @@ public final class Protocol {
       }
       private int bitField0_;
 
-      private int id_ ;
+      private java.lang.Object username_ = "";
       /**
-       * <code>optional int32 id = 1;</code>
+       * <code>optional string username = 1;</code>
        */
-      public boolean hasId() {
+      public boolean hasUsername() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
-       * <code>optional int32 id = 1;</code>
-       */
-      public int getId() {
-        return id_;
-      }
-      /**
-       * <code>optional int32 id = 1;</code>
-       */
-      public Builder setId(int value) {
-        bitField0_ |= 0x00000001;
-        id_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional int32 id = 1;</code>
-       */
-      public Builder clearId() {
-        bitField0_ = (bitField0_ & ~0x00000001);
-        id_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private java.lang.Object username_ = "";
-      /**
-       * <code>optional string username = 2;</code>
-       */
-      public boolean hasUsername() {
-        return ((bitField0_ & 0x00000002) == 0x00000002);
-      }
-      /**
-       * <code>optional string username = 2;</code>
+       * <code>optional string username = 1;</code>
        */
       public java.lang.String getUsername() {
         java.lang.Object ref = username_;
@@ -3641,7 +3283,7 @@ public final class Protocol {
         }
       }
       /**
-       * <code>optional string username = 2;</code>
+       * <code>optional string username = 1;</code>
        */
       public com.google.protobuf.ByteString
           getUsernameBytes() {
@@ -3657,36 +3299,36 @@ public final class Protocol {
         }
       }
       /**
-       * <code>optional string username = 2;</code>
+       * <code>optional string username = 1;</code>
        */
       public Builder setUsername(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000002;
+  bitField0_ |= 0x00000001;
         username_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional string username = 2;</code>
+       * <code>optional string username = 1;</code>
        */
       public Builder clearUsername() {
-        bitField0_ = (bitField0_ & ~0x00000002);
+        bitField0_ = (bitField0_ & ~0x00000001);
         username_ = getDefaultInstance().getUsername();
         onChanged();
         return this;
       }
       /**
-       * <code>optional string username = 2;</code>
+       * <code>optional string username = 1;</code>
        */
       public Builder setUsernameBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000002;
+  bitField0_ |= 0x00000001;
         username_ = value;
         onChanged();
         return this;
@@ -3694,13 +3336,13 @@ public final class Protocol {
 
       private java.lang.Object password_ = "";
       /**
-       * <code>optional string password = 3;</code>
+       * <code>optional string password = 2;</code>
        */
       public boolean hasPassword() {
-        return ((bitField0_ & 0x00000004) == 0x00000004);
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
-       * <code>optional string password = 3;</code>
+       * <code>optional string password = 2;</code>
        */
       public java.lang.String getPassword() {
         java.lang.Object ref = password_;
@@ -3717,7 +3359,7 @@ public final class Protocol {
         }
       }
       /**
-       * <code>optional string password = 3;</code>
+       * <code>optional string password = 2;</code>
        */
       public com.google.protobuf.ByteString
           getPasswordBytes() {
@@ -3733,47 +3375,45 @@ public final class Protocol {
         }
       }
       /**
-       * <code>optional string password = 3;</code>
+       * <code>optional string password = 2;</code>
        */
       public Builder setPassword(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000004;
+  bitField0_ |= 0x00000002;
         password_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional string password = 3;</code>
+       * <code>optional string password = 2;</code>
        */
       public Builder clearPassword() {
-        bitField0_ = (bitField0_ & ~0x00000004);
+        bitField0_ = (bitField0_ & ~0x00000002);
         password_ = getDefaultInstance().getPassword();
         onChanged();
         return this;
       }
       /**
-       * <code>optional string password = 3;</code>
+       * <code>optional string password = 2;</code>
        */
       public Builder setPasswordBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000004;
+  bitField0_ |= 0x00000002;
         password_ = value;
         onChanged();
         return this;
       }
-      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
-      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -3795,12 +3435,11 @@ public final class Protocol {
 
     @java.lang.Deprecated public static final com.google.protobuf.Parser<User>
         PARSER = new com.google.protobuf.AbstractParser<User>() {
-      @java.lang.Override
       public User parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new User(input, extensionRegistry);
+          return new User(input, extensionRegistry);
       }
     };
 
@@ -3813,7 +3452,6 @@ public final class Protocol {
       return PARSER;
     }
 
-    @java.lang.Override
     public Protocol.User getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -3849,14 +3487,13 @@ public final class Protocol {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\016protocol.proto\"w\n\007Message\022\013\n\003pid\030\001 \001(\t" +
-      "\022\014\n\004type\030\002 \001(\t\022\020\n\010userType\030\003 \001(\t\022\023\n\004user" +
-      "\030\004 \001(\0132\005.User\022\023\n\004sale\030\005 \001(\0132\005.Sale\022\025\n\005st" +
-      "ate\030\006 \001(\0132\006.State\"/\n\004Sale\022\n\n\002id\030\001 \001(\005\022\r\n" +
-      "\005value\030\002 \001(\003\022\014\n\004rate\030\003 \001(\002\",\n\005State\022\016\n\006r" +
-      "esult\030\001 \001(\t\022\023\n\013description\030\002 \001(\t\"6\n\004User" +
-      "\022\n\n\002id\030\001 \001(\005\022\020\n\010username\030\002 \001(\t\022\020\n\010passwo" +
-      "rd\030\003 \001(\t"
+      "\n\016protocol.proto\"j\n\007Message\022\014\n\004type\030\001 \001(" +
+      "\t\022\020\n\010userType\030\002 \001(\t\022\023\n\004user\030\003 \001(\0132\005.User" +
+      "\022\023\n\004sale\030\004 \001(\0132\005.Sale\022\025\n\005state\030\005 \001(\0132\006.S" +
+      "tate\"1\n\004Sale\022\014\n\004name\030\001 \001(\t\022\r\n\005value\030\002 \001(" +
+      "\003\022\014\n\004rate\030\003 \001(\002\",\n\005State\022\016\n\006result\030\001 \001(\t" +
+      "\022\023\n\013description\030\002 \001(\t\"*\n\004User\022\020\n\010usernam" +
+      "e\030\001 \001(\t\022\020\n\010password\030\002 \001(\t"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -3875,13 +3512,13 @@ public final class Protocol {
     internal_static_Message_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Message_descriptor,
-        new java.lang.String[] { "Pid", "Type", "UserType", "User", "Sale", "State", });
+        new java.lang.String[] { "Type", "UserType", "User", "Sale", "State", });
     internal_static_Sale_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_Sale_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Sale_descriptor,
-        new java.lang.String[] { "Id", "Value", "Rate", });
+        new java.lang.String[] { "Name", "Value", "Rate", });
     internal_static_State_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_State_fieldAccessorTable = new
@@ -3893,7 +3530,7 @@ public final class Protocol {
     internal_static_User_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_User_descriptor,
-        new java.lang.String[] { "Id", "Username", "Password", });
+        new java.lang.String[] { "Username", "Password", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

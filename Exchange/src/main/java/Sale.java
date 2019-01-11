@@ -1,7 +1,7 @@
 
 public interface Sale {
 
-    public Integer getCompanyId() ;
+    public String getCompany() ;
 
     public Boolean isActive();
 
