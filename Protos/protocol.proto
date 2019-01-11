@@ -1,17 +1,20 @@
 syntax = "proto2";
 
-message Message{
-    optional string pid = 1;
-    optional string type = 2;
-    optional string userType = 3;
-    optional User user = 4;
-    optional Sale sale = 5;
-    optional State state = 6;
+//package exchange;
+
+//option java_outer_classname = "message";
+
+message Message {
+    optional string type = 1;
+    optional string userType = 2;
+    optional User user = 3;
+    optional Sale sale = 4;
+    optional State state = 5;
 }
 
 message Sale {
-    optional int id = 1;
-    optional int value = 2;
+    optional string name = 1;
+    optional int64 value = 2;
     optional float rate = 3;
 }
 

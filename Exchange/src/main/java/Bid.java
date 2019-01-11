@@ -1,8 +1,8 @@
 public class Bid extends Buy {
     private Float rate;
 
-    public Bid(Long offer, Float rate, Integer userId) {
-       super(offer,userId);
+    public Bid(Long offer, Float rate, String user) {
+       super(offer,user);
        this.rate = rate;
     }
 
