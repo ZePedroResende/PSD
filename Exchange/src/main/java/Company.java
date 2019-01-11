@@ -40,7 +40,6 @@ public class Company {
         Boolean result = false;
         if(isAuctionAvailable()){
             this.auctions.put(currentSale++, new Auction(maxAmount, maxRate, this.id, time));
-            currentSale++;
             result = true;
         }
         return result;
@@ -52,8 +51,7 @@ public class Company {
         if(isEmissionAvailable()){
             Float rate = getRate();
             if( rate < 0) return false;
-            this.emissions.put(currentSale, new Emission(this.id, maxAmount, time, rate ));
-            currentSale++;
+            this.emissions.put(currentSale++, new Emission(this.id, maxAmount, time, rate ));
             result = true;
         }
 
@@ -85,6 +83,22 @@ public class Company {
         }
 
         return  rate;
+    }
+
+    public boolean makeBid(Bid bid){
+        boolean value = false;
+        if(isAuctionAvailable()){
+            value = this.auctions.get(currentSale - 1).addBid(bid);
+        }
+        return value;
+    }
+
+    public boolean makeBuy(Buy buy){
+        boolean value = false;
+        if(isEmissionAvailable()){
+            value = this.emissions.get(currentSale - 1).addBuy(buy);
+        }
+        return value;
     }
 
     private boolean isEmissionAvailable(){
