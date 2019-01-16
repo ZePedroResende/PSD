@@ -1,3 +1,5 @@
+package main.java;
+
 import com.google.protobuf.InvalidProtocolBufferException;
 import org.zeromq.ZMQ;
 
