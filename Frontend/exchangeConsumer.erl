@@ -12,9 +12,15 @@ exchangeConsumer(Sock) ->
 		{ok, Bin} ->
 			Msg = protocol:decode_msg(Bin, 'Message'),
 			io:format("Incoming message: ~p\n", [Msg]),
-			Pid = maps:get(pid, Msg),
-			user_manager:send(Msg, Pid),
-			exchangeConsumer(Sock);
+			User = maps:get(user, Msg),
+			Username = maps:get(username, User),
+			case login_manager:user_online(Username) of
+				error -> 
+					exchangeConsumer(Sock);
+				{Pid} ->
+					user_manager:send(Msg, Pid),
+					exchangeConsumer(Sock)
+			end;
 		{error, _} -> 
 			exchangeConsumer(Sock)
 	end.
