@@ -1,5 +1,5 @@
 -module(login_manager).
--export([start/0, create_account/2, close_account/2, login/2, logout/1, online/0]).
+-export([start/0, create_account/2, close_account/2, login/3, logout/1, online/0, user_online/1]).
 
 %interface functions
 
@@ -18,14 +18,20 @@ close_account(Username, Passwd) ->
         {?MODULE, Res} -> Res 
     end.
 
-login(Username, Passwd) ->
-    ?MODULE ! {login, Username, Passwd, self()},
+login(Username, Passwd, Pid) ->
+    ?MODULE ! {login, Username, Passwd, Pid, self()},
     receive 
         {?MODULE, Res} -> Res 
     end.
 
 logout(Username) ->
     ?MODULE ! {logout, Username, self()},
+    receive 
+        {?MODULE, Res} -> Res 
+    end.
+
+user_online(Username) ->
+    ?MODULE ! {user_online, Username, self()},
     receive 
         {?MODULE, Res} -> Res 
     end.
@@ -44,37 +50,46 @@ loop(Map) ->
             case maps:find(U,Map) of
                 error ->
                     From ! {?MODULE, ok},
-                    loop(maps:put(U, {P,true}, Map));
+                    loop(maps:put(U, {P,false,0}, Map));
                 _ ->
                     From ! {?MODULE, user_exists},
                     loop(Map)
             end;
         {close_account, U, P, From} ->
             case maps:find(U,Map) of
+                {ok, {P,_,_}} ->
+                    From ! {?MODULE, ok},
+                    loop(maps:remove(U, Map));
                 _ ->
                     From ! {?MODULE, error},
-                    loop(Map);
-                {ok, {P,_}} ->
-                    From ! {?MODULE, ok},
-                    loop(maps:remove(U, Map))
+                    loop(Map)
             end;
-        {login, U, P, From} ->
+        {login, U, P, Pid, From} ->
             case maps:find(U,Map) of
                 error ->
                     From ! {?MODULE, error},
                     loop(Map);
                 _ ->
                     From ! {?MODULE, ok},
-                    loop(maps:put(U, {P,true}, Map))
+                    loop(maps:put(U, {P,true,Pid}, Map))
             end;
         {logout, U, From} ->
             case maps:find(U,Map) of
                 error ->
                     From ! {?MODULE, error},
                     loop(Map);
-                {P,_} ->
+                {ok, {P,_,_}} ->
                     From ! {?MODULE, ok},
-                    loop(maps:put(U, {P,false}, Map))
+                    loop(maps:put(U, { P, false, 0}, Map))
+            end;
+        {user_online, U, From} ->
+            case maps:find(U,Map) of
+                error ->
+                    From ! {?MODULE, error},
+                    loop(Map);
+                {ok, {_,_,Pid}} ->
+                    From ! {?MODULE, Pid},
+                    loop(Map)
             end;
         {online, From} ->
             Aux = fun(K,{_,BOOL},AccIn) when BOOL == true -> lists:append(K,AccIn) end,
@@ -82,6 +97,3 @@ loop(Map) ->
             From ! {?MODULE, Users},
             loop(Map)
     end.
-
-online_status(K, {_, S}, AccIn) ->
-    true.
