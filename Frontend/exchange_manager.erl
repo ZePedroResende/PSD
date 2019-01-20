@@ -19,17 +19,16 @@ exchange(Exchanges, Cache) ->
                     From ! {ok, Pid},
                     exchange(Exchanges, Cache);
                 error ->
-                    InfoC = findCompany(Company),
-                    Name = maps:get(name, InfoC),
+                    Info = findCompany(Company),
+                    Name = maps:get(name, Info),
                     case maps:find(Name, Exchanges) of
                         {ok, Pid} ->
                             maps:put(Company, Pid, Cache),
                             From ! {ok, Pid},
                             exchange(Exchanges, Cache);
                         error ->
-                            InfoE = findExchange(Name),
-                            Host = maps:get(host, InfoE),
-                            Port = maps:get(port, InfoE),
+                            Host = maps:get(host, Info),
+                            Port = maps:get(port, Info),
                             PidE = exchangeProducer:run(Host,Port),
                             maps:put(Name, PidE, Exchanges),
                             maps:put(Company, PidE, Cache),
@@ -45,23 +44,11 @@ findCompany(Company) ->
         Result = httpc:request(get, {"http://localhost:8080/company/" ++  Company, []}, [], []),
         inets:stop(),
         {struct, Json} = mochijson:decode(Result),
-	    {_, Company} = proplists:get_value("exchange", Json), 
-	    proplists_to_map_company(Company).
-
-findExchange(Exchange) ->
-    {ok, {_, _, result}} =
-        inets:start(),
-        Result = httpc:request(get, {"http://localhost:8080/exchange/" ++  Exchange, []}, [], []),
-        inets:stop(),
-        {struct, Json} = mochijson:decode(Result),
 	    {_, Exchange} = proplists:get_value("exchange", Json), 
-	    proplists_to_map_exchange(Exchange).
+	    proplists_to_map(Exchange).
 
-proplists_to_map_company(Company) ->
-	Name = proplists:get_value("name", Company),
-	#{name => Name}.
 
-proplists_to_map_exchange(Exchange) ->
+proplists_to_map(Exchange) ->
 	Name = proplists:get_value("name", Exchange),
 	Host = proplists:get_value("host", Exchange),
 	Port = proplists:get_value("port", Exchange),
