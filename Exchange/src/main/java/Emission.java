@@ -2,6 +2,7 @@
 import org.zeromq.ZMQ;
 
 import java.util.*;
+import Protos.Protocol;
 
 public class Emission implements Sale {
     private String company;

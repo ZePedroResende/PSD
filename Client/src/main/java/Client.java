@@ -1,18 +1,11 @@
-
-import com.google.protobuf.InvalidProtocolBufferException;
-import com.google.protobuf.Message;
-import jdk.internal.util.xml.impl.Input;
 import org.zeromq.ZMQ;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.Socket;
 
 public class Client {
 
     private String frontendAddress;
-    private String address;
     private ZMQ.Socket sub;
     private State state;
     private Thread t1;
@@ -20,9 +13,8 @@ public class Client {
     private Thread t3;
 
 
-    public Client( String address ,  String frontendAddress, int frontendPort) throws IOException {
+    public Client(String frontendAddress, int frontendPort) throws IOException {
         this.frontendAddress = frontendAddress;
-        this.address = address;
         ZMQ.Context context = ZMQ.context(1);
         sub = context.socket(ZMQ.SUB);
         sub.connect(frontendAddress);
@@ -41,5 +33,10 @@ public class Client {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public static void main(String[] args) throws Exception, IOException {
+        new Client(args[0],Integer.parseInt(args[1]));
     }
 }
