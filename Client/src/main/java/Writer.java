@@ -8,7 +8,7 @@ import java.net.Socket;
 import java.net.URL;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
-
+import Protos.Protocol;
 public class Writer implements Runnable{
     private OutputStream os;
     private State state;

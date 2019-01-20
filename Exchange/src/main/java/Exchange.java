@@ -2,7 +2,6 @@
 import com.google.gson.Gson;
 import com.google.protobuf.InvalidProtocolBufferException;
 import org.zeromq.ZMQ;
-import sun.net.www.http.HttpClient;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -12,20 +11,22 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-
+import Protos.Protocol;
 public class Exchange {
     private Map<String ,Company> companies;
     private ZMQ.Socket push;
     private ZMQ.Socket pull;
     private ZMQ.Socket pub;
+    private String port;
     private int id;
 
-    public Exchange(Map<String,Company> companies ,ZMQ.Socket push, ZMQ.Socket pull, ZMQ.Socket pub, int id ){
+    public Exchange(Map<String,Company> companies ,ZMQ.Socket push, ZMQ.Socket pull, ZMQ.Socket pub, int id, String port ){
         this.companies = companies;
         this.push = push;
         this.pull = pull;
         this.pub = pub;
         this.id = id;
+        this.port = port;
         this.directoryExchangeCreate();
     }
 
@@ -41,7 +42,7 @@ public class Exchange {
         ZMQ.Socket pub = context.socket(ZMQ.PUB);
         pub.connect("tcp://localhost:" + args[2]);
 
-        Exchange exchange = populate(push, pull, pub, Integer.parseInt(args[3]) );
+        Exchange exchange = populate(push, pull, pub, Integer.parseInt(args[3]), args[1] );
 
         while(true){
 
@@ -84,7 +85,7 @@ public class Exchange {
 
     }
 
-    public static Exchange populate(ZMQ.Socket push, ZMQ.Socket pull, ZMQ.Socket pub, int id){
+    public static Exchange populate(ZMQ.Socket push, ZMQ.Socket pull, ZMQ.Socket pub, int id, String port){
         Map<String,Company> companies = new HashMap<>();
         if(id == 0){
             companies.put("Cesium",new Company("Cesium"));
@@ -97,7 +98,7 @@ public class Exchange {
             companies.put("NEEGIUM1",new Company("NEEGIUM1"));
         }
 
-        return new Exchange(companies,push,pull,pub, id);
+        return new Exchange(companies,push,pull,pub, id, port);
 
     }
 

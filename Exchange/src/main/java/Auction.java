@@ -1,7 +1,7 @@
 import org.zeromq.ZMQ;
 
 import java.util.*;
-
+import Protos.Protocol;
 
 public class Auction implements Sale {
     private Map<String,Bid> bids;

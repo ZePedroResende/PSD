@@ -1,6 +1,6 @@
 syntax = "proto2";
 
-//package exchange;
+//package Exchange;
 
 //option java_outer_classname = "message";
 
