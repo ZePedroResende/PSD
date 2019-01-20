@@ -16,6 +16,27 @@ public class DirectoryService {
     public DirectoryService() {
         this.exchanges = new HashMap<>();
         this.companies = new HashMap<>();
+
+        populateDirectory();
+    }
+
+    private void populateDirectory() {
+        Exchange exch1 = new Exchange("exch1", "localhost", 5431);
+        Exchange exch2 = new Exchange("exch2", "localhost", 5432);
+        Exchange exch3 = new Exchange("exch3", "localhost", 5433);
+
+        exchanges.put(exch1.getName(), exch1);
+        exchanges.put(exch2.getName(), exch2);
+        exchanges.put(exch3.getName(), exch3);
+
+        companies.put("Google", new Company("Google", exch1));
+        companies.put("Apple", new Company("Apple", exch1));
+        companies.put("Microsoft", new Company("Microsoft", exch1));
+        companies.put("Amazon", new Company("Amazon", exch2));
+        companies.put("Tesla", new Company("Tesla", exch2));
+        companies.put("Netflix", new Company("Netflix", exch3));
+        companies.put("Disney", new Company("Disney", exch3));
+        companies.put("Oracle", new Company("Oracle", exch3));
     }
 
     public List<Exchange> getExchanges() {
