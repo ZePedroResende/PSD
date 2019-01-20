@@ -1,7 +1,6 @@
 package directory.services;
 
 import directory.models.Auction;
-import directory.models.Emission;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
@@ -9,24 +8,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class AuctionService {
     public static final String AUCTION_NOT_FOUND = "Auction %s not found";
 
-    private final Map<Integer, Auction> auctions;
-    private final AtomicInteger counter;
+    private final Map<Long, Auction> auctions;
+    private final AtomicLong counter;
 
     public AuctionService() {
         this.auctions = new HashMap<>();
-        this.counter = new AtomicInteger();
+        this.counter = new AtomicLong();
     }
 
     public List<Auction> getAuctions() {
         return new ArrayList<>(this.auctions.values());
     }
 
-    public Auction getAuction(final int id) {
+    public Auction getAuction(long id) {
         Auction auction = auctions.get(id);
 
         if (auction == null) {
@@ -38,12 +37,16 @@ public class AuctionService {
     }
 
     public Auction createAuction(String company, long amount, float maxRate) {
-        final int id = counter.incrementAndGet();
+        final long id = counter.incrementAndGet();
 
-        return auctions.put(id, new Auction(id, company, amount, maxRate));
+        Auction auction = new Auction(id, company, amount, maxRate);
+
+        auctions.putIfAbsent(id, auction);
+
+        return auction;
     }
 
-    public Auction updateAuction(int id, boolean active, boolean success) {
+    public Auction updateAuction(long id, boolean active, boolean success) {
         Auction auction = auctions.get(id);
 
         if (auction == null) {

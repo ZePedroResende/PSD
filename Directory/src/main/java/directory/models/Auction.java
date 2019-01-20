@@ -1,19 +1,24 @@
 package directory.models;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class Auction {
-    final private int id;
+    @NotEmpty
     final private String company;
+    @NotEmpty
     final private float maxRate;
+    @NotEmpty
     final private long amount;
     final private Map<String, Bid> bids;
 
+    private long id;
     private Boolean active;
     private Boolean success;
 
-    public Auction(int id, String company, long amount, float maxRate) {
+    public Auction(long id, String company, long amount, float maxRate) {
         this.id = id;
         this.company = company;
         this.amount = amount;
@@ -23,7 +28,7 @@ public class Auction {
         this.setSuccess(false);
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

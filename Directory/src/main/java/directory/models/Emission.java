@@ -4,18 +4,17 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class Emission {
     @NotEmpty
-    final private int id;
-    @NotEmpty
     final private String company;
     @NotEmpty
-    final private float rate;
-    @NotEmpty
     final private long amount;
+    @NotEmpty
+    final private float rate;
 
+    private long id;
     private boolean active;
     private boolean success;
 
-    public Emission(int id, String company, long amount, float rate) {
+    public Emission(long id, String company, long amount, float rate) {
         this.id = id;
         this.company = company;
         this.amount = amount;
@@ -29,7 +28,7 @@ public class Emission {
         return company;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
