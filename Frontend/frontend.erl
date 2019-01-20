@@ -21,7 +21,8 @@ handleauth(Sock) ->
       Pass = maps:get(password, Cli),
       case maps:get(type, Msg) of
         "REGISTER" ->
-          registarhandler(Sock, User, Pass);
+          UserType = maps:get(userType, Msg),
+          registarhandler(Sock, User, Pass, UserType);
         "LOGIN" ->
           loginhandler(Sock, User, Pass)
       end;
@@ -31,26 +32,26 @@ handleauth(Sock) ->
       gen_tcp:close(Sock)
   end.
 
-send_msg(Sock, User, Type, Result, Description) ->
-  ResBin = protocol:encode_msg(#{dest => User, type => Type, response => #{result => Result, description => Description}}, 'Message'),
+send_msg(Sock, User, Type, UserType, Result, Description) ->
+  ResBin = protocol:encode_msg(#{dest => User, type => Type, userType => UserType, response => #{result => Result, description => Description}}, 'Message'),
   gen_tcp:send(Sock, ResBin).
 
-registarhandler(Sock, User, Password) ->
-  case login_manager:create_account(User, Password) of
-    ok ->
-      send_msg(Sock, User, "RESPONSE", "OK", "USER CREATED"),
-      user_manager:user(User, Sock);
-    user_exists ->
-      send_msg(Sock, User, "RESPONSE", "EXCEPTION", "USER EXISTS"),
+registarhandler(Sock, User, Password, UserType) ->
+  case login_manager:create_account(User, Password, UserType) of
+    {ok, UT} ->
+      send_msg(Sock, User, "RESPONSE", UT, "OK", "USER CREATED"),
+      handleauth(Sock);
+    {user_exists, UT} ->
+      send_msg(Sock, User, "RESPONSE", UT, "EXCEPTION", "USER EXISTS"),
       handleauth(Sock)
   end.
 
 loginhandler(Sock, User, Password) ->
   case login_manager:login(User, Password) of
-    ok ->
-      send_msg(Sock, User, "RESPONSE", "OK", "LOGGED IN"),
+    {ok, UT} ->
+      send_msg(Sock, User, "RESPONSE", UT, "OK", "LOGGED IN"),
       user_manager:user(User, Sock);
-    error ->
-      send_msg(Sock, User, "RESPONSE", "EXCEPTION", "INVALID LOGIN"),
+    {error, UT} ->
+      send_msg(Sock, User, "RESPONSE", UT, "EXCEPTION", "INVALID LOGIN"),
       handleauth(Sock)
   end.
