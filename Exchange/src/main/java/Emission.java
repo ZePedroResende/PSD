@@ -1,10 +1,9 @@
-package main.java;
 
 import org.zeromq.ZMQ;
 
 import java.util.*;
 
-public class Emission implements Sale{
+public class Emission implements Sale {
     private String company;
     private int id;
     private Float rate;

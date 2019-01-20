@@ -1,4 +1,3 @@
-package main.java;
 
 public class Bid extends Buy {
     private Float rate;

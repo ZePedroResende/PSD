@@ -1,8 +1,6 @@
-package main.java;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import org.zeromq.ZMQ;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -63,7 +61,7 @@ public class Exchange {
                     }
                     break;
             }
-            Protocol.State state = Protocol.State.newBuilder().setDescription(Boolean.toString(result)).build();
+            Protocol.State state = Protocol.State.newBuilder().setResult(Boolean.toString(result)).setDescription(Boolean.toString(result)).build();
             Protocol.User user = Protocol.User.newBuilder().setUsername(message.getUser().getUsername()).build();
             Protocol.Message response = Protocol.Message.newBuilder().setState(state).setUser(user).build();
             push.send(response.toByteArray());
@@ -110,6 +108,7 @@ public class Exchange {
         Protocol.Message message ;
         byte[] packet = pull.recv();
         try {
+
             message = Protocol.Message.parseFrom(packet);
         } catch (InvalidProtocolBufferException e) {
             e.printStackTrace();
