@@ -61,7 +61,7 @@ public class CompanyService {
         return company;
     }
 
-    public void populateDirectory(List<Exchange> exchanges) {
+    public void populateDirectory(final List<Exchange> exchanges) {
         Exchange exch1 = exchanges.get(0);
         Exchange exch2 = exchanges.get(1);
         Exchange exch3 = exchanges.get(2);
