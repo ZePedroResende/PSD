@@ -1,23 +1,19 @@
+import org.zeromq.ZMQ;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class Company {
-    private Integer id;
     private String name;
     private Map<Integer,Auction> auctions;
     private Map<Integer,Emission> emissions;
     private Integer currentSale;
 
-    public Company(Integer id, String name) {
-        this.id = id;
+    public Company( String name) {
         this.name = name;
         this.auctions = new HashMap<>();
         this.emissions = new HashMap<>();
         this.currentSale = 0;
-    }
-
-    public Integer getId() {
-        return id;
     }
 
     public String getName() {
@@ -36,24 +32,22 @@ public class Company {
         return currentSale;
     }
 
-    public Boolean addAuction(Long maxAmount, Float maxRate, Integer time){
+    public Boolean addAuction(Long maxAmount, Float maxRate, Integer time, ZMQ.Socket push){
         Boolean result = false;
         if(isAuctionAvailable()){
-            this.auctions.put(currentSale++, new Auction(maxAmount, maxRate, this.id, time));
-            currentSale++;
+            this.auctions.put(currentSale++, new Auction(maxAmount, maxRate, this.name, this.currentSale, time, push ));
             result = true;
         }
         return result;
     }
 
-    public Boolean addEmission(Long maxAmount, Integer time){
+    public Boolean addEmission(Long maxAmount, Integer time, ZMQ.Socket push){
         boolean result = false;
 
         if(isEmissionAvailable()){
             Float rate = getRate();
             if( rate < 0) return false;
-            this.emissions.put(currentSale, new Emission(this.id, maxAmount, time, rate ));
-            currentSale++;
+            this.emissions.put(currentSale++, new Emission(this.name, this.currentSale, maxAmount, time, rate, push));
             result = true;
         }
 
@@ -85,6 +79,22 @@ public class Company {
         }
 
         return  rate;
+    }
+
+    public boolean makeBid(Bid bid){
+        boolean value = false;
+        if(isAuctionAvailable()){
+            value = this.auctions.get(currentSale - 1).addBid(bid);
+        }
+        return value;
+    }
+
+    public boolean makeBuy(Buy buy){
+        boolean value = false;
+        if(isEmissionAvailable()){
+            value = this.emissions.get(currentSale - 1).addBuy(buy);
+        }
+        return value;
     }
 
     private boolean isEmissionAvailable(){

@@ -1,26 +1,35 @@
 import com.sun.org.apache.xpath.internal.operations.Bool;
+import org.zeromq.ZMQ;
 
 import java.util.*;
 
 public class Auction implements Sale{
-    private Map<Integer,Bid> bids;
+    private Map<String,Bid> bids;
+    private int id;
     private Long amount;
     private Float maxRate;
     private Boolean active;
-    private Integer companyId;
+    private String company;
     private Boolean sucess;
+    private ZMQ.Socket push;
 
-    public Auction( Long maxAmount, Float maxRate, Integer companyId, Integer time) {
+    public Auction(Long maxAmount, Float maxRate, String company, int id, Integer time, ZMQ.Socket push) {
+        this.id = id;
         this.bids = new HashMap<>();
         this.amount = maxAmount;
         this.maxRate = maxRate;
         this.active = true;
-        this.companyId = companyId;
+        this.company = company;
+        this.push = push;
         new Timer().schedule(new Finisher(this),time);
     }
 
-    public Map<Integer,Bid> getBid() {
+    public Map<String,Bid> getBid() {
         return bids;
+    }
+
+    public int getId(){
+        return id;
     }
 
     public Long getMaxAmount() {
@@ -34,13 +43,13 @@ public class Auction implements Sale{
     public synchronized boolean addBid(Bid bid){
         boolean valid = this.maxRate > bid.getRate() && active;
         if(valid){
-            this.bids.put(bid.getUserId(),bid);
+            this.bids.put(bid.getUser(),bid);
         }
         return valid;
     }
 
-    public Integer getCompanyId() {
-        return companyId;
+    public String getCompany() {
+        return company;
     }
 
     public synchronized Boolean isActive(){
@@ -51,11 +60,7 @@ public class Auction implements Sale{
         return this.sucess;
     }
 
-    public synchronized Map.Entry<Boolean, List<List<Bid>>> getResults() throws InterruptedException {
-        while (active){
-            wait();
-        }
-
+    public synchronized Map.Entry<Boolean, List<List<Bid>>> getResults()  {
         ArrayList<Bid> bids = new ArrayList<>(this.bids.values());
         bids.sort((Bid x, Bid y) -> Math.toIntExact(x.getOffer() - y.getOffer()));
         int index = 0;
@@ -85,8 +90,7 @@ public class Auction implements Sale{
         return new AbstractMap.SimpleEntry<>(sucess, result);
     }
 
-    public Float getMinimalRate(){
-        try {
+    public synchronized Float getMinimalRate(){
             Map.Entry<Boolean, List<List<Bid>>> results = getResults();
 
             List<Bid> bids = results.getValue().get(0);
@@ -97,16 +101,34 @@ public class Auction implements Sale{
             else {
                 return new Float(-1);
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
-        return new Float(-2);
     }
 
     private void finishAuction(){
         this.active = false;
-        notifyAll();
+
+        Map.Entry<Boolean, List<List<Bid>>> result = getResults();
+        List<Bid> winner = result.getValue().get(0);
+        List<Bid> loser = result.getValue().get(1);
+
+        winner.forEach(x -> {
+            Protocol.State state = Protocol.State.newBuilder().setResult("WON").setDescription("AUCTION" + this.id + " " + result.getKey()).build();
+            Protocol.User user = Protocol.User.newBuilder().setUsername(x.getUser()).build();
+            Protocol.Sale sale = Protocol.Sale.newBuilder().setRate(x.getRate()).setValue(x.getOffer()).build();
+            Protocol.Message response = Protocol.Message.newBuilder().setState(state).setSale(sale).setUser(user).build();
+            push.send(response.toByteArray());
+
+        });
+
+        loser.forEach(x -> {
+            Protocol.State state = Protocol.State.newBuilder().setResult("LOST").setDescription("AUCTION" + this.id + " " + result.getKey()).build();
+            Protocol.User user = Protocol.User.newBuilder().setUsername(x.getUser()).build();
+            Protocol.Sale sale = Protocol.Sale.newBuilder().setName(this.company).setRate(x.getRate()).setValue(x.getOffer()).build();
+            Protocol.Message response = Protocol.Message.newBuilder().setState(state).setSale(sale).setUser(user).build();
+            push.send(response.toByteArray());
+
+        });
+
     }
 
     private class Finisher extends TimerTask{
