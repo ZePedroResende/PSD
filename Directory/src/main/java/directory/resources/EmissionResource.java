@@ -31,7 +31,7 @@ public class EmissionResource {
     @GET
     @Timed
     @Path("{id}")
-    public Representation<Emission> showEmission(@NotNull @PathParam("id") final int id) {
+    public Representation<Emission> showEmission(@NotNull @PathParam("id") final long id) {
         return new Representation<>(HttpStatus.OK_200, service.getEmission(id));
     }
 
@@ -50,7 +50,7 @@ public class EmissionResource {
     @Timed
     @Path("{id}")
     public Representation<Emission> updateEmission(
-            @NotNull @PathParam("id") final int id,
+            @NotNull @PathParam("id") final long id,
             @NotNull @QueryParam("active") final boolean active,
             @NotNull @QueryParam("success") final boolean success
     ) {
