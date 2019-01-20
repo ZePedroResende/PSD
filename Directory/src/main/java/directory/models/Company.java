@@ -37,4 +37,12 @@ public class Company {
     public List<Emission> getEmissions() {
         return emissions;
     }
+
+    public boolean addAuction(Auction auction) {
+        return auctions.add(auction);
+    }
+
+    public boolean addEmission(Emission emission) {
+        return emissions.add(emission);
+    }
 }

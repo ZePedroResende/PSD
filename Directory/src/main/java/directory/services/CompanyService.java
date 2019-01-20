@@ -1,6 +1,8 @@
 package directory.services;
 
+import directory.models.Auction;
 import directory.models.Company;
+import directory.models.Emission;
 import directory.models.Exchange;
 
 import javax.ws.rs.WebApplicationException;
@@ -15,10 +17,17 @@ public class CompanyService {
     public static final String COMPANY_ALREADY_EXISTS = "Company %s already exists";
 
     private final ExchangeService exchangeService;
+    private final AuctionService auctionService;
+    private final EmissionService emissionService;
     private final Map<String, Company> companies;
 
-    public CompanyService(ExchangeService exchangeService) {
+    public CompanyService(
+            ExchangeService exchangeService,
+            AuctionService auctionService,
+            EmissionService emissionService) {
         this.exchangeService = exchangeService;
+        this.auctionService = auctionService;
+        this.emissionService = emissionService;
         this.companies = new HashMap<>();
     }
 
@@ -48,6 +57,28 @@ public class CompanyService {
         return company.getExchange();
     }
 
+    public List<Auction> getCompanyAuctions(String name) {
+        Company company = companies.get(name);
+
+        if (company == null) {
+            final String errorMessage = String.format("Company %s does not exist", name);
+            throw new WebApplicationException(errorMessage, Response.Status.NOT_FOUND);
+        }
+
+        return company.getAuctions();
+    }
+
+    public List<Emission> getCompanyEmissions(String name) {
+        Company company = companies.get(name);
+
+        if (company == null) {
+            final String errorMessage = String.format("Company %s does not exist", name);
+            throw new WebApplicationException(errorMessage, Response.Status.NOT_FOUND);
+        }
+
+        return company.getEmissions();
+    }
+
     public Company createCompany(String key, String exchange) {
         final boolean exists = companies.containsKey(key);
 
@@ -58,6 +89,36 @@ public class CompanyService {
         }
 
         Company company = new Company(key, exchangeService.getExchange(exchange));
+
+        companies.put(key, company);
+
+        return company;
+    }
+
+    public Company addCompanyAuction(String key, int auctionId) {
+        Company company = companies.get(key);
+
+        if (company == null) {
+            final String errorMessage = String.format(COMPANY_NOT_FOUND, key);
+            throw new WebApplicationException(errorMessage, Response.Status.NOT_FOUND);
+        }
+
+        company.addAuction(auctionService.getAuction(auctionId));
+
+        companies.put(key, company);
+
+        return company;
+    }
+
+    public Company addCompanyEmission(String key, int emissionId) {
+        Company company = companies.get(key);
+
+        if (company == null) {
+            final String errorMessage = String.format(COMPANY_NOT_FOUND, key);
+            throw new WebApplicationException(errorMessage, Response.Status.NOT_FOUND);
+        }
+
+        company.addEmission(emissionService.getEmission(emissionId));
 
         companies.put(key, company);
 

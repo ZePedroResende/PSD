@@ -30,9 +30,9 @@ public class PeerLendingDirectory extends Application<DirectoryConfiguration> {
     @Override
     public void run(DirectoryConfiguration configuration, Environment environment) {
         final ExchangeService exchangeService = new ExchangeService();
-        final CompanyService companyService = new CompanyService(exchangeService);
-        final EmissionService emissionService = new EmissionService();
         final AuctionService auctionService = new AuctionService();
+        final EmissionService emissionService = new EmissionService();
+        final CompanyService companyService = new CompanyService(exchangeService, auctionService, emissionService);
 
         exchangeService.populateDirectory();
         companyService.populateDirectory(exchangeService.getExchanges());
