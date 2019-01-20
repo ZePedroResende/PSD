@@ -68,7 +68,7 @@ public class DirectoryResource {
     @POST
     @Timed
     @Path("/companies")
-    public Representation<Company> createExchange(@NotNull @Valid final Company company) {
+    public Representation<Company> createCompany(@NotNull @Valid final Company company) {
         return new Representation<>(HttpStatus.OK_200, service.createCompany(company));
     }
 }
