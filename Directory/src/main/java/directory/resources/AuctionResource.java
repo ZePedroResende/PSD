@@ -1,8 +1,10 @@
 package directory.resources;
 
 import com.codahale.metrics.annotation.Timed;
+import directory.models.Auction;
 import directory.models.Emission;
 import directory.representation.Representation;
+import directory.services.AuctionService;
 import directory.services.EmissionService;
 import org.eclipse.jetty.http.HttpStatus;
 
@@ -11,49 +13,49 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-@Path("/emissions")
+@Path("/auctions")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class EmissionResource {
-    private final EmissionService service;
+public class AuctionResource {
+    private final AuctionService service;
 
-    public EmissionResource(@NotNull EmissionService service) {
+    public AuctionResource(@NotNull AuctionService service) {
         this.service = service;
     }
 
     @GET
     @Timed
     @Path("/")
-    public Representation<List<Emission>> indexEmissions() {
-        return new Representation<>(HttpStatus.OK_200, service.getEmissions());
+    public Representation<List<Auction>> indexAuctions() {
+        return new Representation<>(HttpStatus.OK_200, service.getAuctions());
     }
 
     @GET
     @Timed
     @Path("{id}")
-    public Representation<Emission> showEmission(@NotNull @PathParam("id") final int id) {
-        return new Representation<>(HttpStatus.OK_200, service.getEmission(id));
+    public Representation<Auction> showAuction(@NotNull @PathParam("id") final int id) {
+        return new Representation<>(HttpStatus.OK_200, service.getAuction(id));
     }
 
     @POST
     @Timed
     @Path("/")
-    public Representation<Emission> createEmission(
+    public Representation<Auction> createAuction(
             @NotNull @QueryParam("company") final String company,
             @NotNull @QueryParam("amount") final long amount,
-            @NotNull @QueryParam("rate") final float rate
+            @NotNull @QueryParam("maxrate") final float maxRate
     ) {
-        return new Representation<>(HttpStatus.OK_200, service.createEmission(company, amount, rate));
+        return new Representation<>(HttpStatus.OK_200, service.createAuction(company, amount, maxRate));
     }
 
     @PUT
     @Timed
     @Path("{id}")
-    public Representation<Emission> updateEmission(
+    public Representation<Auction> updateAuction(
             @NotNull @PathParam("id") final int id,
             @NotNull @QueryParam("active") final boolean active,
             @NotNull @QueryParam("success") final boolean success
     ) {
-        return new Representation<>(HttpStatus.OK_200, service.updateEmission(id, active, success));
+        return new Representation<>(HttpStatus.OK_200, service.updateAuction(id, active, success));
     }
 }

@@ -41,7 +41,7 @@ public class EmissionService {
     public Emission createEmission(String company, long amount, float rate) {
         final int id = counter.incrementAndGet();
 
-        return emissions.put(id, new Emission(company, id, amount, rate));
+        return emissions.put(id, new Emission(id, company, amount, rate));
     }
 
     public Emission updateEmission(int id, boolean active, boolean success) {

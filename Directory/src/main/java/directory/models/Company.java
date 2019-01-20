@@ -12,11 +12,14 @@ public class Company {
     private final Exchange exchange;
     @NotEmpty
     private final List<Auction> auctions;
+    @NotEmpty
+    private final List<Emission> emissions;
 
     public Company(String name, Exchange exchange) {
         this.name = name;
         this.exchange = exchange;
         this.auctions = new ArrayList<>();
+        this.emissions = new ArrayList<>();
     }
 
     public String getName() {
@@ -29,5 +32,9 @@ public class Company {
 
     public List<Auction> getAuctions() {
         return auctions;
+    }
+
+    public List<Emission> getEmissions() {
+        return emissions;
     }
 }

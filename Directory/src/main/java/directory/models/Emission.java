@@ -1,17 +1,23 @@
 package directory.models;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class Emission {
-    final private String company;
+    @NotEmpty
     final private int id;
-    final private Float rate;
-    final private Long amount;
+    @NotEmpty
+    final private String company;
+    @NotEmpty
+    final private float rate;
+    @NotEmpty
+    final private long amount;
 
     private boolean active;
     private boolean success;
 
-    public Emission(String company, int id, long amount, float rate) {
-        this.company = company;
+    public Emission(int id, String company, long amount, float rate) {
         this.id = id;
+        this.company = company;
         this.amount = amount;
         this.rate = rate;
         this.setActive(true);

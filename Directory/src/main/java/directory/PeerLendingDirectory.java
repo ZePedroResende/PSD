@@ -2,9 +2,13 @@ package directory;
 
 import directory.health.TemplateHealthCheck;
 import directory.core.Template;
+import directory.resources.AuctionResource;
 import directory.resources.CompanyResource;
+import directory.resources.EmissionResource;
 import directory.resources.ExchangeResource;
+import directory.services.AuctionService;
 import directory.services.CompanyService;
+import directory.services.EmissionService;
 import directory.services.ExchangeService;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
@@ -27,17 +31,23 @@ public class PeerLendingDirectory extends Application<DirectoryConfiguration> {
     public void run(DirectoryConfiguration configuration, Environment environment) {
         final ExchangeService exchangeService = new ExchangeService();
         final CompanyService companyService = new CompanyService(exchangeService);
+        final EmissionService emissionService = new EmissionService();
+        final AuctionService auctionService = new AuctionService();
 
         exchangeService.populateDirectory();
         companyService.populateDirectory(exchangeService.getExchanges());
 
         final ExchangeResource exchangeResource = new ExchangeResource(exchangeService);
         final CompanyResource companyResource = new CompanyResource(companyService);
+        final EmissionResource emissionResource = new EmissionResource(emissionService);
+        final AuctionResource auctionResource = new AuctionResource(auctionService);
 
         final Template template = configuration.buildTemplate();
 
         environment.healthChecks().register("template", new TemplateHealthCheck(template));
         environment.jersey().register(exchangeResource);
         environment.jersey().register(companyResource);
+        environment.jersey().register(emissionResource);
+        environment.jersey().register(auctionResource);
     }
 }
