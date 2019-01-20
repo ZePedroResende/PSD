@@ -1,9 +1,10 @@
-import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import org.zeromq.ZMQ;
 
 import java.util.*;
+import Protos.Protocol;
 
-public class Emission implements Sale{
+public class Emission implements Sale {
     private String company;
     private int id;
     private Float rate;

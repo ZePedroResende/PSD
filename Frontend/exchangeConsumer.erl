@@ -17,7 +17,7 @@ exchangeConsumer(Sock) ->
 			case login_manager:user_online(Username) of
 				error -> 
 					exchangeConsumer(Sock);
-				{Pid} ->
+				Pid ->
 					user_manager:send(Msg, Pid),
 					exchangeConsumer(Sock)
 			end;
