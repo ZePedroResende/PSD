@@ -1,6 +1,5 @@
 apply plugin: 'java'
 apply plugin: 'application'
-apply plugin: 'gradle-one-jar'
 
 version '1.0.0'
 
@@ -13,16 +12,6 @@ mainClassName = 'directory.PeerLendingDirectory'
 project.ext {
     dropwizardVersion = '1.3.8'
     h2databaseVersion = '1.4.197'
-}
-
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'com.github.rholder:gradle-one-jar:1.0.3'
-    }
 }
 
 repositories {
@@ -43,14 +32,6 @@ run {
     args = ['server', './src/dist/config/directory.yml']
 }
 
-task oneJar(type: OneJar) {
-    mainClass = mainClassName
-}
-
 task downloadWrapper(type: Wrapper) {
     gradleVersion = '5.1.1'
-}
-
-artifacts {
-    oneJar
 }

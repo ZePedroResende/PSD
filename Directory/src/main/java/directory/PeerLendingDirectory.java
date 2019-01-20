@@ -1,5 +1,7 @@
 package directory;
 
+import directory.health.TemplateHealthCheck;
+import directory.core.Template;
 import directory.resources.DirectoryResource;
 import directory.services.DirectoryService;
 import io.dropwizard.Application;
@@ -22,6 +24,9 @@ public class PeerLendingDirectory extends Application<DirectoryConfiguration> {
     @Override
     public void run(DirectoryConfiguration configuration, Environment environment) {
         final DirectoryResource resource = new DirectoryResource(new DirectoryService());
+        final Template template = configuration.buildTemplate();
+
+        environment.healthChecks().register("template", new TemplateHealthCheck(template));
         environment.jersey().register(resource);
     }
 }

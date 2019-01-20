@@ -11,8 +11,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.util.Collection;
 import java.util.List;
 
 @Path("/")
@@ -54,12 +52,14 @@ public class DirectoryResource {
     }
 
     @GET
+    @Timed
     @Path("/companies/{name}")
     public Representation<Company> showCompany(@NotNull @PathParam("name") final String name) {
         return new Representation<>(HttpStatus.OK_200, service.getCompany(name));
     }
 
     @GET
+    @Timed
     @Path("/companies/{name}/exchange")
     public Representation<Exchange> showCompanyExchange(@NotNull @PathParam("name") final String name) {
         return new Representation<>(HttpStatus.OK_200, service.getCompanyExchange(name));

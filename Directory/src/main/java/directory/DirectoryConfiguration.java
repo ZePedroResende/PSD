@@ -1,7 +1,7 @@
 package directory;
 
+import directory.core.Template;
 import io.dropwizard.Configuration;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class DirectoryConfiguration extends Configuration {
@@ -11,22 +11,22 @@ public class DirectoryConfiguration extends Configuration {
     @NotEmpty
     private String defaultName = "peer-lending";
 
-    @JsonProperty
     public String getTemplate() {
         return template;
     }
 
-    @JsonProperty
     public void setTemplate(String template) {
         this.template = template;
     }
 
-    @JsonProperty
+    public Template buildTemplate() {
+        return new Template(template, defaultName);
+    }
+
     public String getDefaultName() {
         return defaultName;
     }
 
-    @JsonProperty
     public void setDefaultName(String name) {
         this.defaultName = name;
     }
