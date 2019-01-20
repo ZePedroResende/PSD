@@ -26,7 +26,7 @@ public class PeerLendingDirectory extends Application<DirectoryConfiguration> {
     @Override
     public void run(DirectoryConfiguration configuration, Environment environment) {
         final ExchangeService exchangeService = new ExchangeService();
-        final CompanyService companyService = new CompanyService();
+        final CompanyService companyService = new CompanyService(exchangeService);
 
         exchangeService.populateDirectory();
         companyService.populateDirectory(exchangeService.getExchanges());

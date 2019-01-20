@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 public class ExchangeService {
-    private static final String EXCHANGE_NOT_FOUND = "Exchange %s does not exist";
-    private static final String EXCHANGE_ALREADY_EXISTS = "Exchange %s already exists";
+    public static final String EXCHANGE_NOT_FOUND = "Exchange %s does not exist";
+    public static final String EXCHANGE_ALREADY_EXISTS = "Exchange %s already exists";
 
     private final Map<String, Exchange> exchanges;
 
@@ -34,8 +34,7 @@ public class ExchangeService {
         return exchange;
     }
 
-    public Exchange createExchange(Exchange exchange) {
-        final String key = exchange.getName();
+    public Exchange createExchange(String key, String host, int port) {
         final boolean exists = exchanges.containsKey(key);
 
         // Request validation
@@ -43,6 +42,8 @@ public class ExchangeService {
             final String errorMessage = String.format(EXCHANGE_ALREADY_EXISTS, key);
             throw new WebApplicationException(errorMessage, Response.Status.NOT_ACCEPTABLE);
         }
+
+        Exchange exchange = new Exchange(key, host, port);
 
         exchanges.put(key, exchange);
 

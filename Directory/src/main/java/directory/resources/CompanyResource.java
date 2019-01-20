@@ -7,7 +7,6 @@ import directory.representation.Representation;
 import directory.services.CompanyService;
 import org.eclipse.jetty.http.HttpStatus;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -48,7 +47,10 @@ public class CompanyResource {
     @POST
     @Timed
     @Path("/")
-    public Representation<Company> createCompany(@NotNull @Valid final Company company) {
-        return new Representation<>(HttpStatus.OK_200, service.createCompany(company));
+    public Representation<Company> createCompany(
+            @NotNull @QueryParam("name") final String name,
+            @NotNull @QueryParam("exchange") final String exchange
+    ) {
+        return new Representation<>(HttpStatus.OK_200, service.createCompany(name, exchange));
     }
 }

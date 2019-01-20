@@ -11,12 +11,14 @@ import java.util.List;
 import java.util.Map;
 
 public class CompanyService {
-    private static final String COMPANY_NOT_FOUND = "Company %s does not exist";
-    private static final String COMPANY_ALREADY_EXISTS = "Company %s already exists";
+    public static final String COMPANY_NOT_FOUND = "Company %s does not exist";
+    public static final String COMPANY_ALREADY_EXISTS = "Company %s already exists";
 
+    private final ExchangeService exchangeService;
     private final Map<String, Company> companies;
 
-    public CompanyService() {
+    public CompanyService(ExchangeService exchangeService) {
+        this.exchangeService = exchangeService;
         this.companies = new HashMap<>();
     }
 
@@ -46,8 +48,7 @@ public class CompanyService {
         return company.getExchange();
     }
 
-    public Company createCompany(Company company) {
-        final String key = company.getName();
+    public Company createCompany(String key, String exchange) {
         final boolean exists = companies.containsKey(key);
 
         // Request validation
@@ -55,6 +56,8 @@ public class CompanyService {
             final String errorMessage = String.format(COMPANY_ALREADY_EXISTS, key);
             throw new WebApplicationException(errorMessage, Response.Status.NOT_ACCEPTABLE);
         }
+
+        Company company = new Company(key, exchangeService.getExchange(exchange));
 
         companies.put(key, company);
 

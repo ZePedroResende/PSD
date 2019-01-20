@@ -6,7 +6,6 @@ import directory.representation.Representation;
 import directory.services.ExchangeService;
 import org.eclipse.jetty.http.HttpStatus;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -40,7 +39,11 @@ public class ExchangeResource {
     @POST
     @Timed
     @Path("/")
-    public Representation<Exchange> createExchange(@NotNull @Valid final Exchange exchange) {
-        return new Representation<>(HttpStatus.OK_200, service.createExchange(exchange));
+    public Representation<Exchange> createExchange(
+            @NotNull @QueryParam("name") final String name,
+            @NotNull @QueryParam("host") final String host,
+            @NotNull @QueryParam("port") final int port
+    ) {
+        return new Representation<>(HttpStatus.OK_200, service.createExchange(name, host, port));
     }
 }
