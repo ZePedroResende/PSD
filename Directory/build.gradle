@@ -19,6 +19,9 @@ repositories {
 }
 
 dependencies {
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
+
     compile(
             "io.dropwizard:dropwizard-core:$dropwizardVersion",
             "io.dropwizard:dropwizard-hibernate:$dropwizardVersion",
@@ -26,6 +29,16 @@ dependencies {
             "io.dropwizard:dropwizard-auth:$dropwizardVersion",
             "com.h2database:h2:$h2databaseVersion"
     )
+}
+
+jar {
+    manifest {
+        attributes "Main-Class": mainClassName
+    }
+
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
 
 run {
