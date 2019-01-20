@@ -3,8 +3,10 @@ package directory.representation;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Representation<T> {
-    final private long code;
-    final private T data;
+    private long code;
+    private T data;
+
+    public Representation() {}
 
     public Representation(long code, T data) {
         this.code = code;

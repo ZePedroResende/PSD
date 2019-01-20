@@ -10,6 +10,11 @@ import java.util.HashMap;
 import java.util.List;
 
 public class DirectoryService {
+    private static final String EXCHANGE_NOT_FOUND = "Exchange %s does not exist";
+    private static final String EXCHANGE_ALREADY_EXISTS = "Exchange %s already exists";
+    private static final String COMPANY_NOT_FOUND = "Company %s does not exist";
+    private static final String COMPANY_ALREADY_EXISTS = "Company %s already exists";
+
     private final HashMap<String, Company> companies;
     private final HashMap<String, Exchange> exchanges;
 
@@ -47,7 +52,7 @@ public class DirectoryService {
         Exchange exchange = exchanges.get(name);
 
         if (exchange == null) {
-            final String errorMessage = String.format("Exchange %s does not exist", name);
+            final String errorMessage = String.format(EXCHANGE_NOT_FOUND, name);
             throw new WebApplicationException(errorMessage, Response.Status.NOT_FOUND);
         }
 
@@ -60,7 +65,7 @@ public class DirectoryService {
 
         // Request validation
         if (exists) {
-            final String errorMessage = String.format("Exchange %s already exists", key);
+            final String errorMessage = String.format(EXCHANGE_ALREADY_EXISTS, key);
             throw new WebApplicationException(errorMessage, Response.Status.NOT_ACCEPTABLE);
         }
 
@@ -77,7 +82,7 @@ public class DirectoryService {
         Company company = companies.get(name);
 
         if (company == null) {
-            final String errorMessage = String.format("Company %s does not exist", name);
+            final String errorMessage = String.format(COMPANY_NOT_FOUND, name);
             throw new WebApplicationException(errorMessage, Response.Status.NOT_FOUND);
         }
 
@@ -101,7 +106,7 @@ public class DirectoryService {
 
         // Request validation
         if (exists) {
-            final String errorMessage = String.format("Company %s already exists", key);
+            final String errorMessage = String.format(COMPANY_ALREADY_EXISTS, key);
             throw new WebApplicationException(errorMessage, Response.Status.NOT_ACCEPTABLE);
         }
 
