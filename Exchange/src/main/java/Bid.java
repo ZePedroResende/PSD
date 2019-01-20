@@ -1,3 +1,4 @@
+
 public class Bid extends Buy {
     private Float rate;
 

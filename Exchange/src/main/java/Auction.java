@@ -1,9 +1,9 @@
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.zeromq.ZMQ;
 
 import java.util.*;
 
-public class Auction implements Sale{
+
+public class Auction implements Sale {
     private Map<String,Bid> bids;
     private int id;
     private Long amount;

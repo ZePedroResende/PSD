@@ -1,6 +1,15 @@
+
+import com.google.gson.Gson;
 import com.google.protobuf.InvalidProtocolBufferException;
 import org.zeromq.ZMQ;
+import sun.net.www.http.HttpClient;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,12 +18,15 @@ public class Exchange {
     private ZMQ.Socket push;
     private ZMQ.Socket pull;
     private ZMQ.Socket pub;
+    private int id;
 
-    public Exchange(Map<String,Company> companies ,ZMQ.Socket push, ZMQ.Socket pull, ZMQ.Socket pub){
+    public Exchange(Map<String,Company> companies ,ZMQ.Socket push, ZMQ.Socket pull, ZMQ.Socket pub, int id ){
         this.companies = companies;
         this.push = push;
         this.pull = pull;
         this.pub = pub;
+        this.id = id;
+        this.directoryExchangeCreate();
     }
 
 
@@ -29,7 +41,7 @@ public class Exchange {
         ZMQ.Socket pub = context.socket(ZMQ.PUB);
         pub.connect("tcp://localhost:" + args[2]);
 
-        Exchange exchange = populate(push, pull, pub);
+        Exchange exchange = populate(push, pull, pub, Integer.parseInt(args[3]) );
 
         while(true){
 
@@ -61,7 +73,7 @@ public class Exchange {
                     }
                     break;
             }
-            Protocol.State state = Protocol.State.newBuilder().setDescription(Boolean.toString(result)).build();
+            Protocol.State state = Protocol.State.newBuilder().setResult(Boolean.toString(result)).setDescription(Boolean.toString(result)).build();
             Protocol.User user = Protocol.User.newBuilder().setUsername(message.getUser().getUsername()).build();
             Protocol.Message response = Protocol.Message.newBuilder().setState(state).setUser(user).build();
             push.send(response.toByteArray());
@@ -72,35 +84,128 @@ public class Exchange {
 
     }
 
-    public static Exchange populate(ZMQ.Socket push, ZMQ.Socket pull, ZMQ.Socket pub){
+    public static Exchange populate(ZMQ.Socket push, ZMQ.Socket pull, ZMQ.Socket pub, int id){
         Map<String,Company> companies = new HashMap<>();
-        companies.put("Cesium",new Company("Cesium"));
-        companies.put("NECC",new Company("NECC"));
-        companies.put("NEEGIUM",new Company("NEEGIUM"));
+        if(id == 0){
+            companies.put("Cesium",new Company("Cesium"));
+            companies.put("NECC",new Company("NECC"));
+            companies.put("NEEGIUM",new Company("NEEGIUM"));
+        }
+        if(id == 1){
+            companies.put("Cesium1",new Company("Cesium1"));
+            companies.put("NECC1",new Company("NECC1"));
+            companies.put("NEEGIUM1",new Company("NEEGIUM1"));
+        }
 
-        return new Exchange(companies,push,pull,pub);
+        return new Exchange(companies,push,pull,pub, id);
 
     }
 
 
     private void createCompany(String name){
+        directoryCompanyCreate(name);
         this.companies.put(name ,new Company(name));
     }
 
     private boolean addAuction(String companyId, Long maxRate, Float rate ){
+        if (!this.companies.containsKey(companyId)){
+           createCompany(companyId);
+        }
+        this.pub.send("auction-"+companyId+" add Auction: Value: "+ maxRate + " Rate:" + rate);
         return this.companies.get(companyId).addAuction(maxRate, rate, 30000, this.push);
     }
 
     private boolean addEmission(String companyId, Long maxRate){
+        if (!this.companies.containsKey(companyId)){
+            return false;
+        }
+        this.pub.send("auction-"+companyId+" add Auction: Value: "+ maxRate );
         return this.companies.get(companyId).addEmission(maxRate, 30000, this.push);
     }
 
     private boolean makeBid(String companyId, Bid bid ){
-        return this.companies.get(companyId).makeBid(bid);
+        boolean b = this.companies.get(companyId).makeBid(bid);
+        if(b){
+            synchronized (this.pub){
+                this.pub.send("auction-"+companyId+" with bid:"+bid.toString());
+            }
+        }
+        return b;
     }
 
     private boolean makeBuy(String companyId, Buy buy){
-       return this.companies.get(companyId).makeBuy(buy);
+        boolean b = this.companies.get(companyId).makeBuy(buy);
+        if(b){
+            synchronized (this.pub){
+                this.pub.send("emission-"+companyId+" with buy:"+buy.toString());
+            }
+        }
+        return b;
+    }
+
+    private void directoryExchangeCreate(){
+        Request r = new Request(this.id);
+        String json = new Gson().toJson(r);
+        sendPostRequest("http://localhost:8080/exchange", json);
+    }
+
+    private void directoryCompanyCreate(String name){
+        Request r = new Request(this.id, name);
+        String json = new Gson().toJson(r);
+        sendPostRequest("http://localhost:8080/company", json);
+    }
+
+    private void directoryAuctionCreate(String company, Long maxRate, Float rate){
+
+        Request r = new Request(this.id, company, maxRate, rate);
+        String json = new Gson().toJson(r);
+        sendPostRequest("http://localhost:8080/company/"+company+"/auction", json);
+    }
+
+    private void directoryEmissionCreate(String company, Long maxRate, Float rate){
+
+        Request r = new Request(this.id, company, maxRate, rate);
+        String json = new Gson().toJson(r);
+        sendPostRequest("http://localhost:8080/company/" + company + "/emission", json);
+    }
+
+    private void sendPostRequest(String urlString, String json){
+        URL url = null;
+        try {
+            url = new URL(urlString);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        HttpURLConnection con = null;
+        try {
+            con = (HttpURLConnection) url.openConnection();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            con.setRequestMethod("POST");
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        }
+        con.setRequestProperty("Content-Type","application/json");
+        con.setDoOutput(true);
+        DataOutputStream wr = null;
+        try {
+            wr = new DataOutputStream(con.getOutputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            wr.writeBytes(json);
+            wr.flush();
+            wr.close();
+
+            int response = con.getResponseCode();
+            System.out.println(response);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private Protocol.Message read(){
@@ -108,6 +213,7 @@ public class Exchange {
         Protocol.Message message ;
         byte[] packet = pull.recv();
         try {
+
             message = Protocol.Message.parseFrom(packet);
         } catch (InvalidProtocolBufferException e) {
             e.printStackTrace();
