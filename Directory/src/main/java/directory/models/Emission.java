@@ -33,11 +33,11 @@ public class Emission {
         return id;
     }
 
-    public Float getRate() {
+    public float getRate() {
         return rate;
     }
 
-    public Long getAmount() {
+    public long getAmount() {
         return amount;
     }
 
