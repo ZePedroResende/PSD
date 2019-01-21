@@ -4,7 +4,7 @@
 run() ->
     {ok, Context} = erlzmq:context(),
     {ok, Sock} = erlzmq:socket(Context, [pull, {active, false}]),
-    register(?MODULE, spawn ( fun() -> exchangeConsumer(Sock) end) ).
+    spawn( fun() -> exchangeConsumer(Sock) end).
 
 
 exchangeConsumer(Sock) ->

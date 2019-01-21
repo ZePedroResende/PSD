@@ -33,7 +33,7 @@ public class AuctionResource {
     @GET
     @Timed
     @Path("{id}")
-    public Representation<Auction> showAuction(@NotNull @PathParam("id") final int id) {
+    public Representation<Auction> showAuction(@NotNull @PathParam("id") final long id) {
         return new Representation<>(HttpStatus.OK_200, service.getAuction(id));
     }
 
@@ -52,7 +52,7 @@ public class AuctionResource {
     @Timed
     @Path("{id}")
     public Representation<Auction> updateAuction(
-            @NotNull @PathParam("id") final int id,
+            @NotNull @PathParam("id") final long id,
             @NotNull @QueryParam("active") final boolean active,
             @NotNull @QueryParam("success") final boolean success
     ) {
