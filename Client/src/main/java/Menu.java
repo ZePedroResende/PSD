@@ -40,7 +40,8 @@ public class Menu {
         Boolean mode;
         try {
             System.out.println(question);
-            mode = Boolean.parseBoolean(input.nextLine());
+            String inp = input.next();
+            mode = Boolean.parseBoolean(inp);
         } catch (NumberFormatException e) {
             System.out.println("Invalid ! Please input valid boolean (true/false)");
             mode = readBoolean(question);
