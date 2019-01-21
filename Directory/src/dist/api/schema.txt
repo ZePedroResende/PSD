@@ -1,0 +1,78 @@
+GET /exchanges
+{
+    "code": 200,
+    "data": [
+        {
+            "host": "localhost",
+            "name": "exch1",
+            "port": 1234
+        }
+    ]
+}
+
+POST /exchanges?name=exch1&host=localhost&port=1234
+{
+    "code": 200,
+    "data": {
+        "host": "localhost",
+        "name": "exch1",
+        "port": 1234
+    }
+}
+
+GET /exchanges/exch1
+{
+    "code": 200,
+    "data": {
+        "host": "localhost",
+        "name": "exch1",
+        "port": 1234
+    }
+}
+
+GET /companies
+{
+    "code": 200,
+    "data": [
+        {
+            "auctions": [],
+            "emissions": [],
+            "exchange": {
+                "host": "localhost",
+                "name": "exch1",
+                "port": 1234
+            },
+            "name": "Amazon"
+        }
+    ]
+}
+
+POST /companies?name=Amazon&exchange=exch1
+{
+    "code": 200,
+    "data": {
+        "auctions": [],
+        "emissions": [],
+        "exchange": {
+            "host": "localhost",
+            "name": "exch1",
+            "port": 1234
+        },
+        "name": "Amazon"
+    }
+}
+
+GET /companies/Amazon
+{
+    "code": 200,
+    "data": {
+        "auctions": [],
+        "emissions": [],
+        "exchange": {
+            "host": "localhost",
+            "name": "exch1",
+            "port": 1234
+        },
+        "name": "Amazon"
+    }
+}
