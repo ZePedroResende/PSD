@@ -147,7 +147,7 @@ public class Exchange {
     private void directoryExchangeCreate(){
         Request r = new Request(this.id);
         String json = new Gson().toJson(r);
-        sendPostRequest("http://localhost:8080/exchange", json);
+        sendPostRequest("http://localhost:8080/exchanges?name="+this.id+"&host=localhost&port="+this.port, "");
     }
 
     private void directoryCompanyCreate(String name){

@@ -96,7 +96,6 @@ public class Writer implements Runnable{
         String username = menu.readString("Username: ");
         String password = menu.readString("Password: ");
         Boolean company = menu.readBoolean("Company ? (true/false): ");
-
         Protocol.User c = Protocol.User.newBuilder().setUsername(username).setPassword(password).build();
         Protocol.Message req = Protocol.Message.newBuilder().setType("REGISTER").setUserType(company ? "company" : "investor").setUser(c).build();
         byte[] result = req.toByteArray();

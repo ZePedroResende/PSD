@@ -42,7 +42,7 @@ public class Menu {
             System.out.println(question);
             mode = Boolean.parseBoolean(input.nextLine());
         } catch (NumberFormatException e) {
-            System.out.println("Invalid ! Please input valid number");
+            System.out.println("Invalid ! Please input valid boolean (true/false)");
             mode = readBoolean(question);
         }
 
