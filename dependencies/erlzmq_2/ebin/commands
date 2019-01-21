@@ -1,0 +1,11 @@
+code:load_abs("erlzmq"). 
+code:load_abs("erlzmq_nif"). 
+code:load_abs("../../../Frontend/exchangeConsumer"). 
+code:load_abs("../../../Frontend/exchangeProducer"). 
+code:load_abs("../../../Frontend/exchange_manager"). 
+code:load_abs("../../../Frontend/frontend"). 
+code:load_abs("../../../Frontend/mochijson"). 
+code:load_abs("../../../Frontend/protocol"). 
+code:load_abs("../../../Frontend/user_manager"). 
+code:load_abs("../../../Frontend/login_manager").
+frontend:server(7000).
