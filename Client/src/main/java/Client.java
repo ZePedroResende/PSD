@@ -13,11 +13,11 @@ public class Client {
     private Thread t3;
 
 
-    public Client(String frontendAddress, int frontendPort) throws IOException {
+    public Client(String frontendAddress, int frontendPort, String subPort) throws IOException {
         this.frontendAddress = frontendAddress;
         ZMQ.Context context = ZMQ.context(1);
         sub = context.socket(ZMQ.SUB);
-        sub.connect(frontendAddress);
+        sub.connect("tcp://localhost:"+subPort);
         Socket socketJava = new Socket(frontendAddress, frontendPort);
         this.state = new State();
         this.t1 = new Thread(new Writer(socketJava, state, sub));
@@ -37,6 +37,6 @@ public class Client {
 
 
     public static void main(String[] args) throws Exception, IOException {
-        new Client(args[0],Integer.parseInt(args[1]));
+        new Client(args[0],Integer.parseInt(args[1]), args[2]);
     }
 }
