@@ -1,0 +1,10 @@
+[
+{ "file"      : "c_src/erlzmq_nif.c"
+, "directory" : "/Users/sergiocosta/Desktop/asac/Universidade/4ano/SD/PSD/Trabalho Prático/dependencies/erlzmq2"
+, "command"   : "cc -c -Ic_src -Ideps/zeromq3/include -g -Wall -fPIC -I\"/Users/sergiocosta/.asdf/installs/erlang/20.3/lib/erl_interface-3.10.1/include\" -I\"/Users/sergiocosta/.asdf/installs/erlang/20.3/erts-9.3/include\" c_src/erlzmq_nif.c -o c_src/erlzmq_nif.o"
+},
+{ "file"      : "c_src/vector.c"
+, "directory" : "/Users/sergiocosta/Desktop/asac/Universidade/4ano/SD/PSD/Trabalho Prático/dependencies/erlzmq2"
+, "command"   : "cc -c -Ic_src -Ideps/zeromq3/include -g -Wall -fPIC -I\"/Users/sergiocosta/.asdf/installs/erlang/20.3/lib/erl_interface-3.10.1/include\" -I\"/Users/sergiocosta/.asdf/installs/erlang/20.3/erts-9.3/include\" c_src/vector.c -o c_src/vector.o"
+}
+]
