@@ -34,9 +34,6 @@ public class PeerLendingDirectory extends Application<DirectoryConfiguration> {
         final EmissionService emissionService = new EmissionService();
         final CompanyService companyService = new CompanyService(exchangeService, auctionService, emissionService);
 
-        exchangeService.populateDirectory();
-        companyService.populateDirectory(exchangeService.getExchanges());
-
         final ExchangeResource exchangeResource = new ExchangeResource(exchangeService);
         final CompanyResource companyResource = new CompanyResource(companyService);
         final EmissionResource emissionResource = new EmissionResource(emissionService);
