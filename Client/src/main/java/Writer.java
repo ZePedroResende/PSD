@@ -177,7 +177,7 @@ public class Writer implements Runnable{
         channel = tipo;
         String company = menu.readString("Company to subscribe: ");
         if(company != ""){
-            channel = channel + "-" + tipo;
+            channel = channel + "-" + company;
         }
 
         sub.subscribe(channel.getBytes());
@@ -190,7 +190,7 @@ public class Writer implements Runnable{
         channel = tipo;
         String company = menu.readString("Company to unsubscribe: ");
         if(company != ""){
-            channel = channel +"-"+ tipo;
+            channel = channel +"-"+ company;
         }
 
         sub.unsubscribe(channel.getBytes());

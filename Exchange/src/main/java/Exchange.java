@@ -17,7 +17,7 @@ import Protos.Protocol;
 public class Exchange {
     private Map<String ,Company> companies;
     private ZMQ.Socket push;
-    private ZMQ.Socket pull;1
+    private ZMQ.Socket pull;
     private ZMQ.Socket pub;
     private String port;
     private int id;
@@ -50,6 +50,7 @@ public class Exchange {
         while(true){
 
             Protocol.Message message = exchange.read();
+            System.out.println(message);
             Protocol.Sale sale = message.getSale();
             Boolean result = false;
 
@@ -123,7 +124,7 @@ public class Exchange {
         if (!this.companies.containsKey(companyId)){
             return false;
         }
-        this.pub.send("auction-"+companyId+" add Auction: Value: "+ maxRate );
+        this.pub.send("emission-"+companyId+" add Emixxion: Value: "+ maxRate );
         return this.companies.get(companyId).addEmission(maxRate, 30000, this.push);
     }
 

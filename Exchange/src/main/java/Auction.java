@@ -111,6 +111,13 @@ public class Auction implements Sale {
         List<Bid> winner = result.getValue().get(0);
         List<Bid> loser = result.getValue().get(1);
 
+        System.out.println("winner: " + winner.size() + " loser:"+loser.size());
+        String strResult = result.getKey() ? "SUCESS" : "FAILURE";
+        Protocol.State state1 = Protocol.State.newBuilder().setResult(strResult).setDescription("AUCTION" + this.id + " " + result.getKey()).build();
+        Protocol.User user1 = Protocol.User.newBuilder().setUsername(company).build();
+        Protocol.Message response1 = Protocol.Message.newBuilder().setState(state1).setUser(user1).build();
+        push.send(response1.toByteArray());
+
         winner.forEach(x -> {
             Protocol.State state = Protocol.State.newBuilder().setResult("WON").setDescription("AUCTION" + this.id + " " + result.getKey()).build();
             Protocol.User user = Protocol.User.newBuilder().setUsername(x.getUser()).build();
@@ -139,6 +146,7 @@ public class Auction implements Sale {
         }
         @Override
         public void run() {
+            System.out.println("FINISH auction: " + auction.id);
             auction.finishAuction();
         }
     }

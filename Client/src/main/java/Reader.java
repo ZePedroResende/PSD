@@ -31,7 +31,6 @@ public class Reader implements Runnable{
     private void updateState(Protocol.Message message){
         Protocol.State state = message.getState();
         String result, description;
-
         result = state.getResult();
         description = state.getDescription();
 
