@@ -9,7 +9,7 @@ user(User, Sock) ->
     {send, Data} ->
       gen_tcp:send(Sock, Data),
       user(User, Sock);
-    {tcp, _, Data} ->
+    {tcp, Sock, Data} ->
       Msg = protocol:decode_msg(Data, 'Message'),
       Sale = maps:get(sale, Msg),
 			Company = maps:get(name, Sale),
@@ -17,8 +17,10 @@ user(User, Sock) ->
       io:format("Message = ~p\n", [Msg]),
 			ok = exchangeProducer:new_order(Data, Pid),
 			user(User, Sock);
-    {tcp_closed, _} ->
-      login_manager:logout(User);
+    {tcp_closed, Sock} ->
+      login_manager:logout(User),
+      exit(normal);
     {tcp_error, _, _} ->
-      login_manager:logout(User)
+      login_manager:logout(User),
+      exit(normal)
   end.
