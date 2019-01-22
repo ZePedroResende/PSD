@@ -11,6 +11,8 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import Protos.Protocol;
 public class Exchange {
     private Map<String ,Company> companies;
@@ -21,13 +23,14 @@ public class Exchange {
     private int id;
 
     public Exchange(Map<String,Company> companies ,ZMQ.Socket push, ZMQ.Socket pull, ZMQ.Socket pub, int id, String port ){
-        this.companies = companies;
+        this.companies = new ConcurrentHashMap<>();
         this.push = push;
         this.pull = pull;
         this.pub = pub;
         this.id = id;
         this.port = port;
         this.directoryExchangeCreate();
+        companies.keySet().forEach(a -> createCompany(a));
     }
 
 
@@ -153,7 +156,7 @@ public class Exchange {
     private void directoryCompanyCreate(String name){
         Request r = new Request(this.id, name);
         String json = new Gson().toJson(r);
-        sendPostRequest("http://localhost:8080/company", json);
+        sendPostRequest("http://localhost:8080/companies?name="+name+"&exchange="+this.id, "");
     }
 
     private void directoryAuctionCreate(String company, Long maxRate, Float rate){
