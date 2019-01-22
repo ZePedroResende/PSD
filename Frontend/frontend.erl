@@ -4,7 +4,7 @@
 server(Port) ->
   exchange_manager:run(),
   login_manager:start(),
-  {ok, LSock} = gen_tcp:listen(Port, [binary, {packet, line}, {reuseaddr, true}]),
+  {ok, LSock} = gen_tcp:listen(Port, [binary,{packet, 0}, {reuseaddr, true}, {active, true}]),
   acceptor(LSock).
 
 acceptor(LSock) ->
@@ -14,7 +14,7 @@ acceptor(LSock) ->
 
 handleauth(Sock) ->
   receive
-    {tcp, _, Data} ->
+    {tcp, Sock, Data} ->
       Msg = protocol:decode_msg(Data, 'Message'),
       Cli = maps:get(user, Msg),
       User = maps:get(username, Cli),
@@ -33,25 +33,26 @@ handleauth(Sock) ->
   end.
 
 send_msg(Sock, User, Type, UserType, Result, Description) ->
-  ResBin = protocol:encode_msg(#{dest => User, type => Type, userType => UserType, response => #{result => Result, description => Description}}, 'Message'),
+  ResBin = protocol:encode_msg(#{dest => User, type => Type, userType => UserType, state => #{result => Result, description => Description}}, 'Message'),
+  io:format("data ~p", [ResBin]),
   gen_tcp:send(Sock, ResBin).
 
 registarhandler(Sock, User, Password, UserType) ->
   case login_manager:create_account(User, Password, UserType) of
     {ok, UT} ->
-      send_msg(Sock, User, "RESPONSE", UT, "OK", "USER CREATED"),
+      send_msg(Sock, User, "RESPONSE", UT, "true", "USER CREATED"),
       handleauth(Sock);
     {user_exists, UT} ->
-      send_msg(Sock, User, "RESPONSE", UT, "EXCEPTION", "USER EXISTS"),
+      send_msg(Sock, User, "RESPONSE", UT, "false", "USER EXISTS"),
       handleauth(Sock)
   end.
 
 loginhandler(Sock, User, Password) ->
   case login_manager:login(User, Password) of
     {ok, UT} ->
-      send_msg(Sock, User, "RESPONSE", UT, "OK", "LOGGED IN"),
+      send_msg(Sock, User, "RESPONSE", UT, "true", "LOGGED IN"),
       user_manager:user(User, Sock);
     {error, UT} ->
-      send_msg(Sock, User, "RESPONSE", UT, "EXCEPTION", "INVALID LOGIN"),
+      send_msg(Sock, User, "RESPONSE", UT, "false", "INVALID LOGIN"),
       handleauth(Sock)
   end.

@@ -13,7 +13,7 @@ user(User, Sock) ->
       Msg = protocol:decode_msg(Data, 'Message'),
       Sale = maps:get(sale, Msg),
 			Company = maps:get(name, Sale),
-      {ok, Pid} = exchange_manager:find_Producer(Company),
+      {ok, Pid} = exchange_manager:find_producer(Company),
       io:format("Message = ~p\n", [Msg]),
 			ok = exchangeProducer:new_order(Data, Pid),
 			user(User, Sock);
