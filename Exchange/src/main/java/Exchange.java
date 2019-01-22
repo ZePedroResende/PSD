@@ -17,7 +17,7 @@ import Protos.Protocol;
 public class Exchange {
     private Map<String ,Company> companies;
     private ZMQ.Socket push;
-    private ZMQ.Socket pull;
+    private ZMQ.Socket pull;1
     private ZMQ.Socket pub;
     private String port;
     private int id;

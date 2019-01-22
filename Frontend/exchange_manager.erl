@@ -39,13 +39,19 @@ exchange(Exchanges, Cache) ->
     end.
 
 findCompany(Company) ->
-    {ok, {_, _, result}} =
-        inets:start(),
-        Result = httpc:request(get, {"http://localhost:8080/company/" ++  Company, []}, [], []),
-        inets:stop(),
-        {struct, Json} = mochijson:decode(Result),
-	    {_, Exchange} = proplists:get_value("exchange", Json), 
-	    proplists_to_map(Exchange).
+    inets:start(),
+    io:format("data2 "),
+    case httpc:request("http://localhost:8080/companies/" ++ Company) of
+        {ok, {_, _, Result}} ->
+            inets:stop(),
+            {struct, Json} = mochijson:decode(Result),
+	        {_, Data} = proplists:get_value("data", Json), 
+            {_, Exchange} = proplists:get_value("exchange", Data), 
+	        proplists_to_map(Exchange);
+        _ ->
+            inets:stop(),
+            io:format("erro ")
+    end.
 
 
 proplists_to_map(Exchange) ->
